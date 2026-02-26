@@ -8,14 +8,15 @@ const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
 const helmet = require('helmet');
 const session = require('express-session');
+// REDIS -----------------------------------
 const RedisStore = require('connect-redis').default;
 const redis = require('redis');
-
+//
 const router = require('./router.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-const dbURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/DomoMaker';
+const dbURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/portfolio';
 mongoose.connect(dbURI).catch((err) => {
   if (err) {
     console.log('Could not connect to database');
@@ -23,6 +24,7 @@ mongoose.connect(dbURI).catch((err) => {
   }
 });
 
+// REDIS -----------------------------------
 const redisClient = redis.createClient({
   url: process.env.REDISCLOUD_URL,
 });
@@ -40,14 +42,16 @@ redisClient.connect().then(() => {
   app.use(bodyParser.json());
   app.use(session({
     key: 'sessionid',
+     // REDIS -----------------------------------
     store: new RedisStore({
       client: redisClient,
     }),
-    secret: 'Domo Arigato',
+    //
+    secret: 'gouGhoust', // Hashing
     resave: false,
     saveUninitialized: false,
   }));
-
+  //
   app.engine('handlebars', expressHandlebars.engine({ defaultLayout: '' }));
   app.set('view engine', 'handlebars');
   app.set('views', `${__dirname}/../views/`);

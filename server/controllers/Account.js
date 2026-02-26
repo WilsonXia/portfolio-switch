@@ -5,6 +5,7 @@ const { Account } = models;
 const loginPage = (req, res) => res.render('login');
 
 const logout = (req, res) => {
+  // Destroys session cookie
   req.session.destroy();
   res.redirect('/');
 };
@@ -22,7 +23,7 @@ const login = (req, res) => {
     if (err || !account) {
       return res.status(401).json({ error: 'Wrong username or password!' });
     }
-
+    // Create a user cookie to efficiently view user info
     req.session.account = Account.toAPI(account);
 
     return res.json({ redirect: '/maker' });

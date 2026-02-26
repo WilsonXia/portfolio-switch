@@ -1,0 +1,7 @@
+Make sure Node, Redis, and MongoDB are properly installed and setup on the local machine before
+working on the base kit
+
+Also be sure to connect Redis and MongoDB using a .env file, with the appropriate key-value types
+
+Install packages and dependency on Command Prompt using 'npm i' first,
+then use webpack watch and nodemon to dynamically work on the project.
