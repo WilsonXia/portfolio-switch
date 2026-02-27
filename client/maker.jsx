@@ -3,24 +3,31 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-const handleDomo = (e, onDomoAdded) => {
+const handleCreateProject = (e, onProjectAdded) => {
     e.preventDefault();
     helper.hideError();
 
-    const name = e.target.querySelector('#domoName').value;
-    const age = e.target.querySelector('#domoAge').value;
-    const greeting = e.target.querySelector('#domoGreeting').value;
-
-    if (!name || !age) {
-        helper.handleError('Name and Age are required');
+    const name = e.target.querySelector('#projectName').value;
+    const engineType = e.target.querySelector('#projectEngineType').value;
+    const projectType = e.target.querySelector('#projectType').value;
+    const externalLink = e.target.querySelector('#projectExternalLink').value;
+    const githubLink = e.target.querySelector('#projectGithubLink').value;
+    const imageURL = e.target.querySelector('#projectImageURL').value;
+    if (!name || !engineType || projectType) {
+        helper.handleError('Name, Engine type, and Project Type are required');
         return false;
     }
 
-    helper.sendPost(e.target.action, { name, age, greeting }, onDomoAdded);
+    if (!externalLink || !githubLink) {
+        helper.handleError('A link is required');
+        return false;
+    }
+
+    helper.sendPost(e.target.action, { name, engineType, projectType, externalLink, githubLink, imageURL }, onProjectAdded);
     return false;
 }
 
-const handleDomoEdit = (e, id, onDomoAdded) => {
+const handleUpdateProject = (e, id, onDomoAdded) => {
     e.preventDefault();
     helper.hideError();
 
@@ -36,73 +43,93 @@ const handleDomoEdit = (e, id, onDomoAdded) => {
     return false;
 }
 
-const DomoForm = (props) => {
+const ProjectForm = (props) => {
     return (
-        <form id="domoForm"
-            onSubmit={(e) => handleDomo(e, props.triggerReload)}
-            name="domoForm"
-            action="/maker"
+        <form id="projectForm"
+            onSubmit={(e) => handleCreateProject(e, props.triggerReload)}
+            name="projectForm"
+            action="/creator"
             method="POST"
-            className="domoForm"
+            className="projectForm"
         >
             <label htmlFor="name">Name: </label>
-            <input type="text" id="domoName" name="name" placeholder="Domo Name" />
-            <label htmlFor="age">Age: </label>
-            <input type="number" id="domoAge" name='age' min='0' />
-            <label htmlFor="greeting">Greeting: </label>
-            <input type="text" id="domoGreeting" name="greeting" placeholder="Enter a greeting" />
+            <input type="text" id="projectName" name="name" placeholder="Name" />
+            <label htmlFor="engineType">Engine Type: </label>
+            <input type="text" id="projectEngineType" name="engineType" placeholder="Engine Type" />
+            <label htmlFor="projectType">Project Type: </label>
+            <input type="text" id="projectType" name="projectType" placeholder="Project Type" />
+            <label htmlFor="externalLink">Link to Project: </label>
+            <input type="text" id="projectExternalLink" name="externalLink" placeholder="Link" />
+            <label htmlFor="githubLink">Link to Github: </label>
+            <input type="text" id="projectGithubLink" name="githubLink" placeholder="Link" />
+            <label htmlFor="imageURL">Image URL: </label>
+            <input type="text" id="projectImageURL" name="imageURL" placeholder="Image Link" />
 
-            <input className='makeDomoSubmit' type='submit' value="Make Domo" />
+            <input className='projectSubmit' type='submit' value="Create Project" />
         </form>
     )
 }
 
 // Make something that allows you to edit pre-existing domos
-const EditGreetingForm = (props) => {
+const UpdateProjectForm = (props) => {
     return (
-        <form id="greetingForm"
-            onSubmit={(e) => handleDomoEdit(e, props.domoID, props.triggerReload)}
-            name='greetingForm'
-            action='/editSpeech'
+        <form id="updateForm"
+            onSubmit={(e) => handleUpdateProject(e, props.projectID, props.triggerReload)}
+            name='updateForm'
+            action='/updateProject'
             method='POST'
-            className='greetingForm'
+            className='updateForm'
         >
-            <label htmlFor="greeting">New Greeting: </label>
-            <input type="text" id="domoGreeting" name="greeting" placeholder="Enter a greeting" />
+            <label htmlFor="greeting">Update Project</label>
+            <label htmlFor="name">Name: </label>
+            <input type="text" id="projectName" name="name" placeholder="Name" />
+            <label htmlFor="engineType">Engine Type: </label>
+            <input type="text" id="projectEngineType" name="engineType" placeholder="Engine Type" />
+            <label htmlFor="projectType">Project Type: </label>
+            <input type="text" id="projectType" name="projectType" placeholder="Project Type" />
+            <label htmlFor="externalLink">Link to Project: </label>
+            <input type="text" id="projectExternalLink" name="externalLink" placeholder="Link" />
+            <label htmlFor="githubLink">Link to Github: </label>
+            <input type="text" id="projectGithubLink" name="githubLink" placeholder="Link" />
+            <label htmlFor="imageURL">Image URL: </label>
+            <input type="text" id="projectImageURL" name="imageURL" placeholder="Image Link" />
             <input type='submit' value="Submit" />
         </form>
     );
 }
 
-const DomoList = (props) => {
-    const [domos, setDomos] = useState(props.domos);
+const ProjectList = (props) => {
+    const [projects, setProjects] = useState(props.projects);
 
     useEffect(() => {
-        const loadDomosFromServer = async () => {
-            const response = await fetch('/getDomos');
+        const loadProjectsFromServer = async () => {
+            const response = await fetch('/getProjects');
             const data = await response.json();
-            setDomos(data.domos);
+            setProjects(data.projects);
         };
-        loadDomosFromServer();
-    }, [props.reloadDomos]); // Dependency, will trigger effect on change
+        loadProjectsFromServer();
+    }, [props.reloadProjects]); // Dependency, will trigger effect on change
 
-    if (domos.length === 0) {
+    if (projects != null && projects.length === 0) {
         return (
             <div className='domoList'>
-                <h3 className='emptyDomos'>No Domos Yet!</h3>
+                <h3 className='emptyDomos'>No Projects Yet!</h3>
             </div>
         );
     }
 
-    const domoNodes = domos.map(domo => {
+    const projectNodes = projects.map(project => {
         return (
-            <div key={domo.id} className='domo'>
+            <div key={project.id} className='domo'>
                 <img src="/assets/img/domoface.jpeg" alt="domo face" className='domoFace' />
-                <h3 className='domoName'>Name: {domo.name}</h3>
-                <h3 className='domoAge'>Age: {domo.age}</h3>
-                <h3 className='domoName'>"{domo.greeting}"</h3>
+                <h3 className='domoName'>Name: {project.name}</h3>
+                <h3 className='domoAge'>Engine Type: {project.engineType}</h3>
+                <h3 className='domoName'>{project.projectType}</h3>
+                <h3 className='domoName'>{project.externalLink}</h3>
+                <h3 className='domoName'>{project.githubLink}</h3>
+                <h3 className='domoName'>{project.imagURL}</h3>
                 <div>
-                    <EditGreetingForm domoID={domo._id} triggerReload={props.triggerReload} />
+                    <UpdateProjectForm projectType={project._id} triggerReload={props.triggerReload} />
                 </div>
             </div>
         );
@@ -110,21 +137,21 @@ const DomoList = (props) => {
 
     return (
         <div className='domoList'>
-            {domoNodes}
+            {projectNodes}
         </div>
     );
 }
 
 const App = () => {
-    const [reloadDomos, setReloadDomos] = useState(false);
+    const [reloadProjects, setReloadProjects] = useState(false);
 
     return (
         <div>
             <div id='makeDomo'>
-                <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
+                <ProjectForm triggerReload={() => setReloadProjects(!reloadProjects)} />
             </div>
             <div id='domos'>
-                <DomoList domos={[]} reloadDomos={reloadDomos} triggerReload={() => setReloadDomos(!reloadDomos)} />
+                <ProjectList projects={[]} reloadDomos={reloadProjects} triggerReload={() => setReloadProjects(!reloadProjects)} />
             </div>
         </div>
     );
