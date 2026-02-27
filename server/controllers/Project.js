@@ -1,6 +1,16 @@
 const models = require('../models');
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 const { Project } = models;
+
+const createImgUrls = async (req, res) => {
+  const imageUrls = req.files.map(file => {
+    return `https://yourcdn.com/${file.filename}`;
+  });
+
+  return imageUrls;
+}
 
 const creatorPage = (req, res) => {
   return res.render('app');
@@ -17,21 +27,28 @@ const getProjects = async (req, res) => {
 };
 
 const createProject = async (req, res) => {
-  if (!req.body.name || !req.body.engineType || req.body.projectType) {
-    return res.status(400).json({ error: 'These fields are required!' });
+  if (!req.body.name) {
+    return res.status(400).json({ error: 'A name is required!' });
   }
+
+  // if(req.body.tags)// check if there are any tags
 
   if (!req.body.externalLink || !req.body.githubLink) {
     return res.status(400).json({ error: 'A link is required' });
   }
 
+  if (req.files){
+    // Upload any images
+    upload.array("images", 5);
+  }
+
   const projectData = {
-    name: req.body.name,
-    engineType: req.body.engineType,
-    projectType: req.body.projectType,
-    externalLink: req.body.externalLink,
-    githubLink: req.body.githubLink,
-    imageURL: req.body.imageURL // TODO: Figure out how to parse images and send them to Firebase
+    name: req.body.name, // text input
+    tags: req.body.tags, // Have a list of checkboxes
+    externalLink: req.body.externalLink, // text input
+    githubLink: req.body.githubLink, // text input
+    isFeatured: req.body.isFeatured, // Have a checkbox
+    images: createImgUrls(req, res), // input file, multiple
   };
 
   try {
@@ -48,16 +65,7 @@ const createProject = async (req, res) => {
 };
 
 const updateProject = async (req, res) => {
-  // Check if the edits are there
-  // Editable values: All links, image, project and engine type, name
-  if (!req.body.name || !req.body.engineType || req.body.projectType) {
-    return res.status(400).json({ error: 'These fields are required!' });
-  }
-
-  if (!req.body.externalLink || !req.body.githubLink) {
-    return res.status(400).json({ error: 'A link is required' });
-  }
-  // Find change rules
+  // Apply changes if found
   const changes = {};
   if (req.body.name) {
     changes.name = req.body.name;
@@ -74,6 +82,12 @@ const updateProject = async (req, res) => {
   if (req.body.githubLink) {
     changes.githubLink = req.body.githubLink;
   }
+  if (req.files){
+    // Upload any images
+    upload.array("images", 5);
+    changes.images = createImgUrls(req, res);
+  }
+  
 
   const query = { _id: req.body.projectID };
   try {
@@ -96,5 +110,5 @@ module.exports = {
   creatorPage,
   getProjects,
   createProject,
-  updateProject
+  updateProject,
 };

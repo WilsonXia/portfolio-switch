@@ -3,7 +3,7 @@ const mid = require('./middleware');
 
 const router = (app) => {
   app.get('/getProjects', mid.requiresLogin, controllers.Project.getProjects);
-  
+
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
 
@@ -13,6 +13,8 @@ const router = (app) => {
 
   app.get('/creator', mid.requiresLogin, controllers.Project.creatorPage);
   app.post('/creator', mid.requiresLogin, controllers.Project.updateProject);
+
+  // app.post("/upload", mid.uploadImages, controllers.Project.uploadFiles);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

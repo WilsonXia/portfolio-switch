@@ -10,40 +10,18 @@ const ProjectSchema = new mongoose.Schema({
     trim: true,
     set: setName,
   },
-  engineType: {
-    type: String,
-    required: true,
-    trim: true,
-    set: setName,
-  },
-  projectType: {
-    type: String,
-    required: true,
-    trim: true,
-    set: setName,
-  },
-  externalLink: {
-    type: String,
-    required: true,
-    trim: true,
-    set: setName,
-  },
-  githubLink: {
-    type: String,
-    trim: true,
-    set: setName,
-  },
-  imageURL: {
-    type: String,
-    trim: true,
-    set: setName,
-  },
+  tags: [String], // Tags include academic, personal, unity2d, unity3d, website
+  images: [String], // holds imageURLs, upload images to a cdn instead
+  externalLink: String,
+  githubLink: String,
+  isFeatured: Boolean, // Very important
   createdDate: {
     type: Date,
     default: Date.now,
   },
 });
 
+// TODO: Figure out what this does
 ProjectSchema.statics.toAPI = (doc) => ({
   name: doc.name,
 });
