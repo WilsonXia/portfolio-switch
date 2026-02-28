@@ -1,15 +1,32 @@
 const models = require('../models');
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const multer = require("../multer");
+const cloudinary = require('cloudinary').v2; // possibly separate, like with multer
 
 const { Project } = models;
+const { upload } = multer;
 
-const createImgUrls = async (req, res) => {
-  const imageUrls = req.files.map(file => {
-    return `https://yourcdn.com/${file.filename}`;
-  });
+// Upload an image
+const uploadImages = async (req, res) => {
+  try {
+    const files = req.files;
+    const uploadPromises = files.map((file) => {
+      return new Promise <string> ((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: req.body.name }, // make a folder of imgs for that project
+          (error, result) => {
+            if (error || !result) reject(error);
+            else resolve(result.secure_url);
+          }
+        );
+        stream.end(file.buffer);
+      });
+    });
 
-  return imageUrls;
+    const imageUrls = await Promise.all(uploadPromises);
+    return imageUrls;
+  } catch (error) {
+    return res.status(500).json({ message: "Upload failed" });
+  }
 }
 
 const creatorPage = (req, res) => {
@@ -27,20 +44,28 @@ const getProjects = async (req, res) => {
 };
 
 const createProject = async (req, res) => {
+  console.log(req.body);
+  console.log(req.files);
+  let imagesPlaceholder;
   if (!req.body.name) {
     return res.status(400).json({ error: 'A name is required!' });
   }
-
-  // if(req.body.tags)// check if there are any tags
+  
+  // check if there are any tags
+  if(req.body.tags.length <= 0){
+    return res.status(400).json({ error: 'A single tag is required!' });
+  }
 
   if (!req.body.externalLink || !req.body.githubLink) {
     return res.status(400).json({ error: 'A link is required' });
   }
 
-  if (req.files){
+  if (req.files) {
     // Upload any images
     upload.array("images", 5);
+    imagesPlaceholder = uploadImages(req,res);
   }
+
 
   const projectData = {
     name: req.body.name, // text input
@@ -48,7 +73,7 @@ const createProject = async (req, res) => {
     externalLink: req.body.externalLink, // text input
     githubLink: req.body.githubLink, // text input
     isFeatured: req.body.isFeatured, // Have a checkbox
-    images: createImgUrls(req, res), // input file, multiple
+    images: imagesPlaceholder, // input file, multiple
   };
 
   try {
@@ -70,11 +95,8 @@ const updateProject = async (req, res) => {
   if (req.body.name) {
     changes.name = req.body.name;
   }
-  if (req.body.engineType) {
-    changes.engineType = req.body.engineType;
-  }
-  if (req.body.projectType) {
-    changes.projectType = req.body.projectType;
+  if (req.body.tags) {
+    changes.tags = req.body.tags;
   }
   if (req.body.externalLink) {
     changes.externalLink = req.body.externalLink;
@@ -82,12 +104,15 @@ const updateProject = async (req, res) => {
   if (req.body.githubLink) {
     changes.githubLink = req.body.githubLink;
   }
-  if (req.files){
-    // Upload any images
-    upload.array("images", 5);
-    changes.images = createImgUrls(req, res);
+  if (req.body.isFeatured) {
+    changes.isFeatured = req.body.isFeatured;
   }
-  
+  if (req.files) {
+    // Upload any images, TODO: update images
+    upload.array("images", 5);
+    changes.images = uploadImages(req, res);
+  }
+
 
   const query = { _id: req.body.projectID };
   try {

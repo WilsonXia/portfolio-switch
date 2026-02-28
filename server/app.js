@@ -42,7 +42,7 @@ redisClient.connect().then(() => {
   app.use(bodyParser.json());
   app.use(session({
     key: 'sessionid',
-     // REDIS -----------------------------------
+    // REDIS -----------------------------------
     store: new RedisStore({
       client: redisClient,
     }),

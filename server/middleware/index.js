@@ -1,5 +1,3 @@
-// const upload = multer({ dest: "uploads/" });
-
 const requiresLogin = (req, res, next) => {
   // Redirect to Login
   if (!req.session.account) {
@@ -23,11 +21,6 @@ const requiresSecure = (req, res, next) => {
   }
   return next();
 };
-
-// const uploadImages = (req, res, next) => {
-//   upload.array("images", 5);
-//   next();
-// };
 
 const bypassSecure = (req, res, next) => {
   next();

@@ -12,9 +12,8 @@ const router = (app) => {
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
 
   app.get('/creator', mid.requiresLogin, controllers.Project.creatorPage);
-  app.post('/creator', mid.requiresLogin, controllers.Project.updateProject);
-
-  // app.post("/upload", mid.uploadImages, controllers.Project.uploadFiles);
+  app.post('/create', mid.requiresLogin, controllers.Project.createProject);
+  app.post('/update', mid.requiresLogin, controllers.Project.updateProject);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

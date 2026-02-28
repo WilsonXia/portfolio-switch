@@ -17,7 +17,7 @@ const sendPost = async (url, data, handler) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: new FormData(data),
     });
 
     const result = await response.json();
