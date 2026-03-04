@@ -56,8 +56,8 @@ const getProject = async (req, res) => {
 }
 
 const createProject = async (req, res) => {
-  console.log(req.body);
-  console.log(req.files);
+  // console.log(req.body);
+  // console.log(req.files);
   let imagesPlaceholder;
   if (!req.body.name) {
     return res.status(400).json({ error: 'A name is required!' });
@@ -103,13 +103,6 @@ const createProject = async (req, res) => {
 const updateProject = async (req, res) => {
   // Project data should already be loaded onto update form on client side
   // Apply any changes
-  // let reqData = {};
-  // if (req.body) {
-    // console.log("vvvvv Project Data should be down here vvvv");
-    // console.log(req.body);
-    // reqData = { ...req.body };
-  // }
-
   // Pass checks!
   if (!req.body.name) {
     return res.status(400).json({ error: 'A name is required!' });
@@ -123,9 +116,11 @@ const updateProject = async (req, res) => {
   if (!req.body.externalLink || !req.body.githubLink) {
     return res.status(400).json({ error: 'A link is required' });
   }
+  // FormData converts all data into string,
+  // make sure to convert back to its original format
   const changes = {
     name: req.body.name,
-    tags: req.body.tags,
+    tags: req.body.tags.split(','),
     externalLink: req.body.externalLink,
     githubLink: req.body.githubLink,
     isFeatured: req.body.isFeatured,

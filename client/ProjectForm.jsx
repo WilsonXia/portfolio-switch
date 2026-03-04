@@ -1,12 +1,15 @@
 const helper = require('./helper.js');
 const React = require('react');
 const { useState, useEffect } = React;
+const { TextInput } = require('./TextInput.jsx');
 const { ProjectTagSelector } = require('./ProjectTagSelector.jsx');
 
 const handleCreateProject = (e, props, onProjectAdded) => {
     e.preventDefault();
     helper.hideError();
 
+    // TODO: Fix this up for FormData
+    // Checks
     const name = e.target.querySelector('#createName').value;
     const externalLink = e.target.querySelector('#createExternalLink').value;
     const githubLink = e.target.querySelector('#createGithubLink').value;
@@ -46,22 +49,10 @@ const handleUpdateProject = (e, props, onProjectChanged) => {
     formData.append("isFeatured", props.isFeatured);
     formData.append("projectID", props.projectID);
 
-    // const name = e.target.querySelector('#updateName').value;
-    // const externalLink = e.target.querySelector('#updateExternalLink').value;
-    // const githubLink = e.target.querySelector('#updateGithubLink').value;
-
-    // const sendData = {
-    //     name,
-    //     projectID: props.projectID,
-    //     tags: props.tags,
-    //     externalLink,
-    //     githubLink,
-    //     isFeatured: props.isFeatured,
-    //     images: props.images,
-    // }
     console.log("Data sent vvvvvv");
     console.log(formData);
 
+    // TODO: Add checks
     helper.sendPostFile(e.target.action, formData, onProjectChanged);
     return false;
 }
@@ -105,13 +96,10 @@ const ProjectForm = (props) => {
             encType="multipart/form-data"
             className={props.action + "Form"}
         >
-            <label>Name: </label>
-            <input type="text" id={props.action + "Name"} name="name" placeholder="Name" value={project.name}/>
+            <TextInput inputName={"Name"} placeholder={"Enter a name..."} action={props.action} />
             <ProjectTagSelector selected={tags} setSelected={setTags} />
-            <label>Link to Project: </label>
-            <input type="text" id={props.action + "ExternalLink"} name="externalLink" placeholder="Link" value={project.externalLink}/>
-            <label>Link to Github: </label>
-            <input type="text" id={props.action + "GithubLink"} name="githubLink" placeholder="Link" value={project.githubLink} />
+            <TextInput inputName={"External Link"} placeholder={"Link"} action={props.action} />
+            <TextInput inputName={"Github Link"} placeholder={"Link"} action={props.action} />
             <label>Is Featured: </label>
             <input type='checkbox' id={props.action + "IsFeatured"} name="isFeatured" checked={isFeatured} onChange={() => { setIsFeatured(!isFeatured) }} />
             <label>Upload Images: </label>
