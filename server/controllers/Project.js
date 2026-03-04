@@ -1,31 +1,32 @@
 const models = require('../models');
-const multer = require("../multer");
 const cloudinary = require('cloudinary').v2; // possibly separate, like with multer
 
 const { Project } = models;
-const { upload } = multer;
 
 // Upload an image
 const uploadImages = async (req, res) => {
   try {
-    const files = req.files;
-    const uploadPromises = files.map((file) => {
-      return new Promise <string> ((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          { folder: req.body.name }, // make a folder of imgs for that project
-          (error, result) => {
-            if (error || !result) reject(error);
-            else resolve(result.secure_url);
-          }
-        );
-        stream.end(file.buffer);
-      });
-    });
+    const { imageFile } = req.files; // destructuring
+    console.log(imageFile.name);
 
-    const imageUrls = await Promise.all(uploadPromises);
-    return imageUrls;
+    // const files = req.files;
+    // const uploadPromises = files.map((file) => {
+    //   return new Promise <string> ((resolve, reject) => {
+    //     const stream = cloudinary.uploader.upload_stream(
+    //       { folder: req.body.name }, // make a folder of imgs for that project
+    //       (error, result) => {
+    //         if (error || !result) reject(error);
+    //         else resolve(result.secure_url);
+    //       }
+    //     );
+    //     stream.end(file.buffer);
+    //   });
+    // });
+
+    // const imageUrls = await Promise.all(uploadPromises);
+    // return imageUrls;
   } catch (error) {
-    return res.status(500).json({ message: "Upload failed" });
+    return res.status(500).json({ message: "Upload failed..." });
   }
 }
 
@@ -43,6 +44,17 @@ const getProjects = async (req, res) => {
   }
 };
 
+const getProject = async (req, res) => {
+  try {
+    const query = { _id: req.query.projectID };
+    const docs = await Project.findOne(query).lean().exec();
+    return res.json({ project: docs });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Error retrieving documents!' });
+  }
+}
+
 const createProject = async (req, res) => {
   console.log(req.body);
   console.log(req.files);
@@ -50,9 +62,9 @@ const createProject = async (req, res) => {
   if (!req.body.name) {
     return res.status(400).json({ error: 'A name is required!' });
   }
-  
+
   // check if there are any tags
-  if(req.body.tags.length <= 0){
+  if (req.body.tags.length <= 0) {
     return res.status(400).json({ error: 'A single tag is required!' });
   }
 
@@ -61,9 +73,8 @@ const createProject = async (req, res) => {
   }
 
   if (req.files) {
-    // Upload any images
-    upload.array("images", 5);
-    imagesPlaceholder = uploadImages(req,res);
+    // TODO: Upload any images
+    imagesPlaceholder = uploadImages(req, res);
   }
 
 
@@ -90,29 +101,56 @@ const createProject = async (req, res) => {
 };
 
 const updateProject = async (req, res) => {
-  // Apply changes if found
-  const changes = {};
-  if (req.body.name) {
-    changes.name = req.body.name;
-  }
-  if (req.body.tags) {
-    changes.tags = req.body.tags;
-  }
-  if (req.body.externalLink) {
-    changes.externalLink = req.body.externalLink;
-  }
-  if (req.body.githubLink) {
-    changes.githubLink = req.body.githubLink;
-  }
-  if (req.body.isFeatured) {
-    changes.isFeatured = req.body.isFeatured;
-  }
-  if (req.files) {
-    // Upload any images, TODO: update images
-    upload.array("images", 5);
-    changes.images = uploadImages(req, res);
+  // Project data should already be loaded onto update form on client side
+  // Apply any changes
+  // let reqData = {};
+  // if (req.body) {
+    // console.log("vvvvv Project Data should be down here vvvv");
+    // console.log(req.body);
+    // reqData = { ...req.body };
+  // }
+
+  // Pass checks!
+  if (!req.body.name) {
+    return res.status(400).json({ error: 'A name is required!' });
   }
 
+  // check if there are any tags
+  if (req.body.tags.length <= 0) {
+    return res.status(400).json({ error: 'A single tag is required!' });
+  }
+
+  if (!req.body.externalLink || !req.body.githubLink) {
+    return res.status(400).json({ error: 'A link is required' });
+  }
+  const changes = {
+    name: req.body.name,
+    tags: req.body.tags,
+    externalLink: req.body.externalLink,
+    githubLink: req.body.githubLink,
+    isFeatured: req.body.isFeatured,
+  };
+
+  // if (reqData.name) {
+  //   changes.name = reqData.name;
+  // }
+  // if (reqData.tags) {
+  //   changes.tags = reqData.tags;
+  // }
+  // if (reqData.externalLink) {
+  //   changes.externalLink = reqData.externalLink;
+  // }
+  // if (reqData.githubLink) {
+  //   changes.githubLink = reqData.githubLink;
+  // }
+  // if (reqData.isFeatured) {
+  //   changes.isFeatured = reqData.isFeatured;
+  // }
+  if (req.files) {
+    // Upload any images
+    uploadImages(req, res);
+    // changes.images = uploadImages(req, res);
+  }
 
   const query = { _id: req.body.projectID };
   try {
@@ -134,6 +172,7 @@ const updateProject = async (req, res) => {
 module.exports = {
   creatorPage,
   getProjects,
+  getProject,
   createProject,
   updateProject,
 };

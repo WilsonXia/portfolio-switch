@@ -40,10 +40,7 @@ const sendPost = async (url, data, handler) => {
 const sendPostFile = async (url, data, handler) => {
     const response = await fetch(url, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: new FormData(data),
+        body: data, // Client-side should pass in a FormData obj
     });
 
     const result = await response.json();
@@ -66,5 +63,6 @@ const sendPostFile = async (url, data, handler) => {
 module.exports = {
     hideError,
     handleError,
-    sendPost
+    sendPost,
+    sendPostFile
 }

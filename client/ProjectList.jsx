@@ -13,7 +13,7 @@ const ProjectList = (props) => {
             setProjects(data.projects);
         };
         loadProjectsFromServer();
-    }, [props.reloadProjects]); // Dependency, will trigger effect on change
+    }, [props.reloadProjectState]); // Dependency, will trigger effect on change
 
     if (projects != null && projects.length === 0) {
         return (
@@ -24,8 +24,10 @@ const ProjectList = (props) => {
     }
 
     const projectNodes = projects.map(project => {
+        console.log(project._id);
+        
         return (
-            <div key={project.id} className='project'>
+            <div key={project._id} className='project'>
                 <img src="/assets/img/domoface.jpeg" alt="domo face" className='domoFace' />
                 <h3 className='domoName'>{project.name}</h3>
                 <h3>{project.tags}</h3>
@@ -34,7 +36,8 @@ const ProjectList = (props) => {
                 <h3>Is Featured: {project.isFeatured}</h3>
                 <img src={project.images[0]} alt="coverArt" className='coverArt'/>
                 <div>
-                    <ProjectForm action={"update"} projectType={project._id} triggerReload={props.triggerReload} />
+                    <ProjectForm action={"update"} projectID={project._id} 
+                    reloadProjectState={props.reloadProjectState} triggerReload={props.triggerReload} />
                     {/* <ProjectForm projectType={project._id} triggerReload={props.triggerReload} /> */}
                 </div>
             </div>

@@ -14,7 +14,7 @@ const App = () => {
                 <ProjectForm action={"create"} triggerReload={() => setReloadProjects(!reloadProjects)} />
             </div>
             <div id='domos'>
-                <ProjectList projects={[]} reloadDomos={reloadProjects} triggerReload={() => setReloadProjects(!reloadProjects)} />
+                <ProjectList projects={[]} reloadProjectState={reloadProjects} triggerReload={() => setReloadProjects(!reloadProjects)} />
             </div>
         </div>
     );

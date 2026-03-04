@@ -14,7 +14,7 @@ const handleCreateProject = (e, props, onProjectAdded) => {
         helper.handleError('A Name is required');
         return false;
     }
-    console.log(props);
+
     if (props.tags.length <= 0) {
         helper.handleError('A single tag is required');
         return false;
@@ -32,9 +32,8 @@ const handleCreateProject = (e, props, onProjectAdded) => {
         isFeatured: props.isFeatured,
         images: props.images,
     }
-    // console.log(sendData);
 
-    helper.sendPost(e.target.action, sendData, onProjectAdded);
+    helper.sendPostFile(e.target.action, sendData, onProjectAdded);
     return false;
 }
 
@@ -42,26 +41,33 @@ const handleUpdateProject = (e, props, onProjectChanged) => {
     e.preventDefault();
     helper.hideError();
 
-    const name = e.target.querySelector('#updateName').value;
-    const externalLink = e.target.querySelector('#updateExternalLink').value;
-    const githubLink = e.target.querySelector('#updateGithubLink').value;
-    
-    const sendData = {
-        name,
-        projectID: props.id,
-        tags: props.tags,
-        externalLink,
-        githubLink,
-        isFeatured: props.isFeatured,
-        images: props.images,
-    }
-    console.log(sendData);
+    const formData = new FormData(e.target);
+    formData.append("tags", props.tags);
+    formData.append("isFeatured", props.isFeatured);
+    formData.append("projectID", props.projectID);
 
-    helper.sendPost(e.target.action, sendData, onProjectChanged);
+    // const name = e.target.querySelector('#updateName').value;
+    // const externalLink = e.target.querySelector('#updateExternalLink').value;
+    // const githubLink = e.target.querySelector('#updateGithubLink').value;
+
+    // const sendData = {
+    //     name,
+    //     projectID: props.projectID,
+    //     tags: props.tags,
+    //     externalLink,
+    //     githubLink,
+    //     isFeatured: props.isFeatured,
+    //     images: props.images,
+    // }
+    console.log("Data sent vvvvvv");
+    console.log(formData);
+
+    helper.sendPostFile(e.target.action, formData, onProjectChanged);
     return false;
 }
 
 const ProjectForm = (props) => {
+    const [project, setProject] = useState({});
     const [tags, setTags] = useState([]);
     const [images, setImages] = useState([]);
     const [isFeatured, setIsFeatured] = useState(false);
@@ -69,34 +75,55 @@ const ProjectForm = (props) => {
     const formChanges = {};
     formChanges.handler = props.action === "create" ? handleCreateProject : handleUpdateProject;
     formChanges.submit = props.action === "create" ? "Create" : "Submit";
-    formChanges.props = props.action === "create" ? { tags, isFeatured, images } 
-    : { tags, isFeatured, images, projectID: props.projectID };
+    formChanges.props = props.action === "create" ? { tags, isFeatured, images }
+        : { tags, isFeatured, images, projectID: props.projectID };
 
-    return (<form id={props.action + "Form"}
-        onSubmit={(e) => formChanges.handler(e, formChanges.props, props.triggerReload)}
-        action={"/" + props.action}
-        method="POST"
-        encType="multipart/form-data"
-        className={props.action + "Form"}
-    >
-        <label>Name: </label>
-        <input type="text" id={props.action + "Name"} placeholder="Name" />
-        <ProjectTagSelector selected={tags} setSelected={setTags} />
-        <label>Link to Project: </label>
-        <input type="text" id={props.action + "ExternalLink"} placeholder="Link" />
-        <label>Link to Github: </label>
-        <input type="text" id={props.action + "GithubLink"} placeholder="Link" />
-        <label>Is Featured: </label>
-        <input type='checkbox' id={props.action + "IsFeatured"} checked={isFeatured} onChange={() => { setIsFeatured(!isFeatured) }} />
-        <label>Upload Images: </label>
-        <input
-            id={props.action + "ImageUploader"}
-            type="file"
-            multiple accept=".png, .jpg"
-            onChange={(e) => setImages(e.target.files)} // this a hook for files
-        />
-        <input className='submitBtn' type='submit' value={formChanges.submit} />
-    </form>)
+    useEffect(() => {
+        const loadProjectFromServer = async () => {
+            // const qParams = {projectID: props.projectID};
+            const response = await fetch(`/getProject?projectID=${props.projectID}`, {
+                method: 'GET',
+            });
+            const data = await response.json();
+            console.log("data obtained");
+            console.log(data);
+            setProject(data.project);
+            setTags(data.project.tags);
+            setIsFeatured(data.project.isFeatured);
+        };
+        // Read project data if it exists
+        if (props.projectID) {
+            loadProjectFromServer();
+        }
+    }, [props.reloadProjectState]); // Dependency, will trigger effect on change
+
+    return (
+        <form id={props.action + "Form"}
+            onSubmit={(e) => formChanges.handler(e, formChanges.props, props.triggerReload)}
+            action={"/" + props.action}
+            method="POST"
+            encType="multipart/form-data"
+            className={props.action + "Form"}
+        >
+            <label>Name: </label>
+            <input type="text" id={props.action + "Name"} name="name" placeholder="Name" value={project.name}/>
+            <ProjectTagSelector selected={tags} setSelected={setTags} />
+            <label>Link to Project: </label>
+            <input type="text" id={props.action + "ExternalLink"} name="externalLink" placeholder="Link" value={project.externalLink}/>
+            <label>Link to Github: </label>
+            <input type="text" id={props.action + "GithubLink"} name="githubLink" placeholder="Link" value={project.githubLink} />
+            <label>Is Featured: </label>
+            <input type='checkbox' id={props.action + "IsFeatured"} name="isFeatured" checked={isFeatured} onChange={() => { setIsFeatured(!isFeatured) }} />
+            <label>Upload Images: </label>
+            <input
+                id={props.action + "ImageUploader"}
+                type="file"
+                multiple accept=".png, .jpg"
+                name='imageFile'
+                onChange={(e) => setImages(e.target.files)} // this a hook for files
+            />
+            <input className='submitBtn' type='submit' value={formChanges.submit} />
+        </form>)
 }
 
 module.exports = { ProjectForm };

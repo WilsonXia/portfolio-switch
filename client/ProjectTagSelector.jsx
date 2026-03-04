@@ -40,7 +40,6 @@ const ProjectTagSelector = (props) => {
         <div id='tagsContainer'>
             <label>Tags</label>
             {inputTags}
-            <h2 hidden>{props.selected}</h2>
         </div>
     )
 }

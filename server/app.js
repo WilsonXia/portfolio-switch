@@ -1,6 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const compression = require('compression');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
@@ -35,6 +36,7 @@ redisClient.connect().then(() => {
   // Using a promise
   const app = express();
   app.use(helmet());
+  app.use(fileUpload());
   app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
   app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
   app.use(compression());
