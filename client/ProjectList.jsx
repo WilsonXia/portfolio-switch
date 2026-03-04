@@ -1,7 +1,7 @@
 const helper = require('./helper.js');
 const React = require('react');
 const { useState, useEffect } = React;
-const { UpdateProjectForm } = require('./UpdateProjectForm.jsx');
+const { ProjectForm } = require('./ProjectForm.jsx');
 
 const ProjectList = (props) => {
     const [projects, setProjects] = useState(props.projects);
@@ -32,9 +32,10 @@ const ProjectList = (props) => {
                 <h3 className='domoName'>Web:{project.externalLink}</h3>
                 <h3 className='domoName'>Git:{project.githubLink}</h3>
                 <h3>Is Featured: {project.isFeatured}</h3>
-                <img src={project.images[0]} alt="domo face" className='coverArt'/>
+                <img src={project.images[0]} alt="coverArt" className='coverArt'/>
                 <div>
-                    {/* <UpdateProjectForm projectType={project._id} triggerReload={props.triggerReload} /> */}
+                    <ProjectForm action={"update"} projectType={project._id} triggerReload={props.triggerReload} />
+                    {/* <ProjectForm projectType={project._id} triggerReload={props.triggerReload} /> */}
                 </div>
             </div>
         );
