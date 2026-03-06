@@ -1,6 +1,8 @@
 const helper = require('./helper.js');
 const React = require('react');
-const {createRoot} = require('react-dom/client');
+const { useState } = React;
+const { createRoot } = require('react-dom/client');
+const { ProjectList } = require('./ProjectList.jsx');
 
 const handleLogin = (e) => {
     // Prevent Default
@@ -10,13 +12,13 @@ const handleLogin = (e) => {
     const username = e.target.querySelector('#user').value;
     const pass = e.target.querySelector('#pass').value;
 
-    if(!username || !pass){
+    if (!username || !pass) {
         // Handle Error
         helper.handleError('Username or password is empty!');
         return false;
     }
 
-    helper.sendPost(e.target.action, {username, pass});
+    helper.sendPost(e.target.action, { username, pass });
     return false;
 }
 
@@ -28,17 +30,17 @@ const handleSignup = (e) => {
     const pass = e.target.querySelector('#pass').value;
     const pass2 = e.target.querySelector('#pass2').value;
 
-    if(!username || !pass || !pass2){
+    if (!username || !pass || !pass2) {
         helper.handleError('All fields are required!');
         return false;
     }
 
-    if(pass !== pass2) {
+    if (pass !== pass2) {
         helper.handleError('Passwords do not match!');
         return false;
     }
 
-    helper.sendPost(e.target.action, {username, pass, pass2});
+    helper.sendPost(e.target.action, { username, pass, pass2 });
     return false;
 }
 
@@ -52,7 +54,7 @@ const LoginWindow = (props) => {
             className="mainForm"
         >
             <label htmlFor="username">Username: </label>
-            <input type="text" id="user" name="username" placeholder="username"/>
+            <input type="text" id="user" name="username" placeholder="username" />
             <label htmlFor="password">Password: </label>
             <input type="text" id="pass" name='pass' placeholder='password' />
             <input className='formSubmit' type='submit' value="Sign In" />
@@ -69,7 +71,7 @@ const SignupWindow = (props) => {
             className="mainForm"
         >
             <label htmlFor="username">Username: </label>
-            <input type="text" id="user" name="username" placeholder="username"/>
+            <input type="text" id="user" name="username" placeholder="username" />
             <label htmlFor="pass">Password: </label>
             <input type="password" id="pass" name='pass' placeholder='password' />
             <label htmlFor="pass">Password: </label>
@@ -77,6 +79,13 @@ const SignupWindow = (props) => {
             <input className='formSubmit' type='submit' value="Sign In" />
         </form>
     )
+}
+
+const ProjectDisplay = (props) => {
+    const [reloadProjects, setReloadProjects] = useState(false);
+    return <div id='domos'>
+        <ProjectList projects={[]} reloadProjectState={reloadProjects} triggerReload={() => setReloadProjects(!reloadProjects)} />
+    </div>;
 }
 
 const init = () => {
@@ -87,13 +96,13 @@ const init = () => {
 
     loginButton.addEventListener('click', (e) => {
         e.preventDefault();
-        root.render(<LoginWindow/>);
+        root.render(<LoginWindow />);
         return false;
     });
 
     signupButton.addEventListener('click', (e) => {
         e.preventDefault();
-        root.render(<SignupWindow/>);
+        root.render(<ProjectDisplay />);
         return false;
     });
 }

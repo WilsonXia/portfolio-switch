@@ -2,7 +2,8 @@ const controllers = require('./controllers');
 const mid = require('./middleware');
 
 const router = (app) => {
-  app.get('/getProjects', mid.requiresLogin, controllers.Project.getProjects);
+  app.get('/getProjects', controllers.Project.getProjects);
+  // app.get('/getProjects', mid.requiresLogin, controllers.Project.getProjects);
   app.get('/getProject', mid.requiresLogin, controllers.Project.getProject);
 
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
