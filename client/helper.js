@@ -60,7 +60,13 @@ const sendPostFile = async (url, data, handler) => {
     }
 };
 
+const debugFormData = (formData) => {
+    const formObject = Object.fromEntries(formData.entries());
+    console.log(formObject);
+}
+
 module.exports = {
+    debugFormData,
     hideError,
     handleError,
     sendPost,

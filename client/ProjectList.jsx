@@ -24,7 +24,7 @@ const ProjectList = (props) => {
     }
 
     const projectNodes = projects.map(project => {
-        console.log(project._id);
+        // console.log(project._id);
         
         return (
             <div key={project._id} className='project'>

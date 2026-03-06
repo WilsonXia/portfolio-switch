@@ -30,6 +30,18 @@ const uploadImages = async (req, res) => {
   }
 }
 
+// Converts req.body into processable changes for MongoDB
+const processChanges = (req) => {
+  const changes = {
+    name: req.body.name,
+    tags: req.body.tags.split(','),
+    externalLink: req.body.externalLink,
+    githubLink: req.body.githubLink,
+    isFeatured: req.body.isFeatured === 'on',
+  };
+  return changes;
+}
+
 const creatorPage = (req, res) => {
   return res.render('app');
 };
@@ -104,6 +116,8 @@ const updateProject = async (req, res) => {
   // Project data should already be loaded onto update form on client side
   // Apply any changes
   // Pass checks!
+  console.log(req.body);
+  
   if (!req.body.name) {
     return res.status(400).json({ error: 'A name is required!' });
   }
@@ -118,13 +132,7 @@ const updateProject = async (req, res) => {
   }
   // FormData converts all data into string,
   // make sure to convert back to its original format
-  const changes = {
-    name: req.body.name,
-    tags: req.body.tags.split(','),
-    externalLink: req.body.externalLink,
-    githubLink: req.body.githubLink,
-    isFeatured: req.body.isFeatured,
-  };
+  const changes = processChanges(req);
 
   // if (reqData.name) {
   //   changes.name = reqData.name;
