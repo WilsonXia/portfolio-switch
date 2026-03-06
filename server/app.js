@@ -35,8 +35,22 @@ redisClient.connect().then(() => {
   // Must finish everything after connecting to Redis
   // Using a promise
   const app = express();
-  app.use(helmet());
-  app.use(fileUpload());
+  // Source - https://stackoverflow.com/a/72330030
+  // Posted by ebed meleck
+  // Retrieved 2026-03-06, License - CC BY-SA 4.0
+
+  app.use(helmet({ crossOriginEmbedderPolicy: false, originAgentCluster: true }));
+  app.use(
+    helmet.contentSecurityPolicy({
+      useDefaults: true,
+      directives: {
+        "img-src": ["'self'", "https: data: blob:"],
+      },
+    })
+  );
+
+  app.use(fileUpload({ useTempFiles: true, }
+  ));
   app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
   app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
   app.use(compression());

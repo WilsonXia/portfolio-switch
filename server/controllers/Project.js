@@ -4,29 +4,18 @@ const cloudinary = require('cloudinary').v2; // possibly separate, like with mul
 const { Project } = models;
 
 // Upload an image
-const uploadImages = async (req, res) => {
+const uploadImages = async (req) => {
   try {
     const { imageFile } = req.files; // destructuring
-    console.log(imageFile.name);
-
-    // const files = req.files;
-    // const uploadPromises = files.map((file) => {
-    //   return new Promise <string> ((resolve, reject) => {
-    //     const stream = cloudinary.uploader.upload_stream(
-    //       { folder: req.body.name }, // make a folder of imgs for that project
-    //       (error, result) => {
-    //         if (error || !result) reject(error);
-    //         else resolve(result.secure_url);
-    //       }
-    //     );
-    //     stream.end(file.buffer);
-    //   });
-    // });
-
-    // const imageUrls = await Promise.all(uploadPromises);
-    // return imageUrls;
+    console.log(imageFile);
+    // return;
+    // upload to cloudinary
+    const result = await cloudinary.uploader.upload(imageFile.tempFilePath, {folder: req.body.name});
+    console.log(JSON.stringify(result));
+    // return the address
+    return { imgURLS: [result.secure_url] };
   } catch (error) {
-    return res.status(500).json({ message: "Upload failed..." });
+    return { error: "Upload failed..." };
   }
 }
 
@@ -34,12 +23,29 @@ const uploadImages = async (req, res) => {
 const processChanges = (req) => {
   const changes = {
     name: req.body.name,
-    tags: req.body.tags.split(','),
+    tags: req.body.tags.split(',').filter(Boolean),
     externalLink: req.body.externalLink,
     githubLink: req.body.githubLink,
     isFeatured: req.body.isFeatured === 'on',
   };
   return changes;
+}
+
+// Checks
+const checkProjectData = (project) => {
+  if (!project.name) {
+    return { error: `No 'name' was sent` };
+  }
+
+  // check if there are any tags
+  if (project.tags.length <= 0) {
+    return { error: `No 'tags' were sent` };
+  }
+
+  if (!project.externalLink || !project.githubLink) {
+    return { error: `No 'link' was sent` };
+  }
+  return {};
 }
 
 const creatorPage = (req, res) => {
@@ -68,39 +74,27 @@ const getProject = async (req, res) => {
 }
 
 const createProject = async (req, res) => {
-  // console.log(req.body);
-  // console.log(req.files);
-  let imagesPlaceholder;
-  if (!req.body.name) {
-    return res.status(400).json({ error: 'A name is required!' });
-  }
-
-  // check if there are any tags
-  if (req.body.tags.length <= 0) {
-    return res.status(400).json({ error: 'A single tag is required!' });
-  }
-
-  if (!req.body.externalLink || !req.body.githubLink) {
-    return res.status(400).json({ error: 'A link is required' });
+  // Check for problems
+  const changes = processChanges(req);
+  let check = checkProjectData(changes);
+  if (check.error) {
+    return res.status(400).json(check);
   }
 
   if (req.files) {
     // TODO: Upload any images
-    imagesPlaceholder = uploadImages(req, res);
+    // uploadImages(req, res);
+    const imgRes = await uploadImages(req);
+    if(imgRes.error){
+      return res.status(500).json(imgRes);
+    }
+    else{
+      changes.images = imgRes.imgURLS;
+    }
   }
 
-
-  const projectData = {
-    name: req.body.name, // text input
-    tags: req.body.tags, // Have a list of checkboxes
-    externalLink: req.body.externalLink, // text input
-    githubLink: req.body.githubLink, // text input
-    isFeatured: req.body.isFeatured, // Have a checkbox
-    images: imagesPlaceholder, // input file, multiple
-  };
-
   try {
-    const newProject = new Project(projectData);
+    const newProject = new Project(changes);
     await newProject.save();
     return res.status(201).json({ name: newProject.name, projectID: newProject._id });
   } catch (err) {
@@ -115,44 +109,26 @@ const createProject = async (req, res) => {
 const updateProject = async (req, res) => {
   // Project data should already be loaded onto update form on client side
   // Apply any changes
+  // console.log(req.body);
   // Pass checks!
-  console.log(req.body);
-  
-  if (!req.body.name) {
-    return res.status(400).json({ error: 'A name is required!' });
-  }
-
-  // check if there are any tags
-  if (req.body.tags.length <= 0) {
-    return res.status(400).json({ error: 'A single tag is required!' });
-  }
-
-  if (!req.body.externalLink || !req.body.githubLink) {
-    return res.status(400).json({ error: 'A link is required' });
+  const changes = processChanges(req);
+  let check = checkProjectData(changes);
+  if (check.error) {
+    return res.status(400).json({ error: check.error });
   }
   // FormData converts all data into string,
   // make sure to convert back to its original format
-  const changes = processChanges(req);
 
-  // if (reqData.name) {
-  //   changes.name = reqData.name;
-  // }
-  // if (reqData.tags) {
-  //   changes.tags = reqData.tags;
-  // }
-  // if (reqData.externalLink) {
-  //   changes.externalLink = reqData.externalLink;
-  // }
-  // if (reqData.githubLink) {
-  //   changes.githubLink = reqData.githubLink;
-  // }
-  // if (reqData.isFeatured) {
-  //   changes.isFeatured = reqData.isFeatured;
-  // }
   if (req.files) {
-    // Upload any images
-    uploadImages(req, res);
-    // changes.images = uploadImages(req, res);
+    // TODO: Upload any images
+    // uploadImages(req, res);
+    const imgRes = await uploadImages(req);
+    if(imgRes.error){
+      return res.status(500).json(imgRes);
+    }
+    else{
+      changes.images = imgRes.imgURLS;
+    }
   }
 
   const query = { _id: req.body.projectID };

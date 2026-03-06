@@ -1,4 +1,6 @@
 const handleError = (message) => {
+    console.log('Server sent back a message: ');
+    console.log(message);
     document.getElementById('errorMessage').textContent = message;
     document.getElementById('errorBox').classList.remove('hidden');
 };
@@ -60,13 +62,14 @@ const sendPostFile = async (url, data, handler) => {
     }
 };
 
-const debugFormData = (formData) => {
+const convertFormData = (formData) => {
     const formObject = Object.fromEntries(formData.entries());
     console.log(formObject);
+    return formObject;
 }
 
 module.exports = {
-    debugFormData,
+    convertFormData,
     hideError,
     handleError,
     sendPost,

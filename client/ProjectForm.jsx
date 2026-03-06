@@ -4,15 +4,13 @@ const { useState, useEffect } = React;
 const { TextInput } = require('./TextInput.jsx');
 const { ProjectTagSelector } = require('./ProjectTagSelector.jsx');
 
-const handleCreateProject = (e, props, onProjectAdded) => {
-    e.preventDefault();
-    helper.hideError();
 
-    // TODO: Fix this up for FormData
+const checkData = (formData, props) => {
+    // Destructure Form to
+    // Check if required form data is submitted
+    return true;
+    const { name, externalLink, githubLink } = helper.convertFormData(formData);
     // Checks
-    const name = e.target.querySelector('#createName').value;
-    const externalLink = e.target.querySelector('#createExternalLink').value;
-    const githubLink = e.target.querySelector('#createGithubLink').value;
     if (!name) {
         helper.handleError('A Name is required');
         return false;
@@ -27,15 +25,21 @@ const handleCreateProject = (e, props, onProjectAdded) => {
         helper.handleError('A link is required');
         return false;
     }
+    return true
+}
+
+const handleCreateProject = (e, props, onProjectAdded) => {
+    e.preventDefault();
+    helper.hideError();
 
     const formData = new FormData(e.target);
     formData.append("tags", props.tags);
-    formData.append("projectID", props.projectID);
 
-    console.log("Data sent vvvvvv");
-    console.log(formData);
-
-    helper.sendPostFile(e.target.action, formData, onProjectAdded);
+    if (checkData(formData, props)) {
+        // Data has passed checks
+        // allow fetch
+        helper.sendPostFile(e.target.action, formData, onProjectAdded);
+    }
     return false;
 }
 
@@ -47,11 +51,12 @@ const handleUpdateProject = (e, props, onProjectChanged) => {
     formData.append("tags", props.tags);
     formData.append("projectID", props.projectID);
 
-    console.log("Form sent vvvvvv");
-    helper.debugFormData(formData);
+    console.log(props.tags);
+    
 
-    // TODO: Add checks
-    helper.sendPostFile(e.target.action, formData, onProjectChanged);
+    if (checkData(formData, props)) {
+        helper.sendPostFile(e.target.action, formData, onProjectChanged);
+    }
     return false;
 }
 
@@ -65,8 +70,10 @@ const ProjectForm = (props) => {
         isFeatured: false, // Very important
         createdDate: {},
     });
+    const [tags, setTags] = useState([]);
+    const [images, setImages] = useState([]);
 
-    // Handle project changes
+    // Handlers
     const handleTextChange = (e) => {
         // Access the htmlElement's attributes
         // Use those to update the project
@@ -76,16 +83,22 @@ const ProjectForm = (props) => {
             [name]: value
         });
     }
-    const [tags, setTags] = useState([]);
-    const [images, setImages] = useState([]);
-    // const [isFeatured, setIsFeatured] = useState(false);
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setProject({
+            ...project,
+            [name]: checked,
+        });
+    }
+    const handleImageUpload = (e) => setImages(e.target.files)
+    const formChanges = {
+        handler: props.action === "create" ?
+            (e) => handleCreateProject(e, { tags, images }, props.triggerReload)
+            : (e) => handleUpdateProject(e, { tags, images, projectID: props.projectID }, props.triggerReload),
+        submit: props.action === "create" ? "Create" : "Submit"
+    };
 
-    const formChanges = {};
-    formChanges.handler = props.action === "create" ? handleCreateProject : handleUpdateProject;
-    formChanges.submit = props.action === "create" ? "Create" : "Submit";
-    formChanges.props = props.action === "create" ? { tags, images }
-        : { tags, images, projectID: props.projectID };
-
+    // Use Effect
     useEffect(() => {
         const loadProjectFromServer = async () => {
             // const qParams = {projectID: props.projectID};
@@ -96,7 +109,7 @@ const ProjectForm = (props) => {
             console.log("data loaded");
 
             setProject(data.project);
-            setTags(data.project.tags);
+            setTags(data.project.tags.filter(Boolean));
         };
         // Read project data if it exists
         if (props.projectID) {
@@ -106,7 +119,7 @@ const ProjectForm = (props) => {
 
     return (
         <form id={props.action + "Form"}
-            onSubmit={(e) => formChanges.handler(e, formChanges.props, props.triggerReload)}
+            onSubmit={(e) => formChanges.handler(e)}
             action={"/" + props.action}
             method="POST"
             encType="multipart/form-data"
@@ -124,23 +137,15 @@ const ProjectForm = (props) => {
                 action={props.action} onChange={handleTextChange} />
 
             <label>Is Featured:
-                <input type='checkbox' id={props.action + "IsFeatured"} name="isFeatured" checked={project.isFeatured}
-                    onChange={(e) => {
-                        const { name, checked } = e.target;
-                        setProject({
-                            ...project,
-                            [name]: checked,
-                        });
-                    }} /></label>
-
+                <input type='checkbox' name="isFeatured" checked={project.isFeatured}
+                    onChange={handleCheckboxChange} /></label>
 
             <label>Upload Images: </label>
             <input
-                id={props.action + "ImageUploader"}
                 type="file"
                 multiple accept=".png, .jpg"
                 name='imageFile'
-                onChange={(e) => setImages(e.target.files)} // this a hook for files
+                onChange={handleImageUpload}
             />
             <input className='submitBtn' type='submit' value={formChanges.submit} />
         </form>)

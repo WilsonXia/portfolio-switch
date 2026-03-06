@@ -1,7 +1,7 @@
 {
   "name": "portfolio-switch",
   "version": "1.0.0",
-  "description": "A Web Portfolio built using ",
+  "description": "A Web Portfolio built using React.js, Redis, MongoDB, and Cloudinary",
   "main": "./server/app.js",
   "scripts": {
     "webpack": "webpack",
@@ -13,10 +13,14 @@
     "heroku-postbuild": "webpack"
   },
   "keywords": [
+    "React.js",
+    "MongoDB",
+    "Redis",
+    "Cloudinary",
     "Node",
     "MVC",
-    "Redis",
-    "Login"
+    "Portfolio",
+    "Projects"
   ],
   "author": "Wilson Xia",
   "license": "Apache 2.0",

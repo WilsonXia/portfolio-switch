@@ -19,10 +19,10 @@ const ProjectTagSelector = (props) => {
     const handleChange = (option) => {
         if (props.selected.includes(option)) {
             // take out that option
-            props.setSelected(props.selected.filter((item) => item !== option));
+            props.setSelected(props.selected.filter((item) => item !== option).filter(Boolean));
         } else {
             // add that option
-            props.setSelected([...props.selected, option]);
+            props.setSelected([...props.selected, option].filter(Boolean));
         }
     }
 

@@ -5,7 +5,7 @@ const { createRoot } = require('react-dom/client');
 const { ProjectForm } = require('./ProjectForm.jsx');
 const { ProjectList } = require('./ProjectList.jsx');
 
-const App = () => {
+const Creator = () => {
     const [reloadProjects, setReloadProjects] = useState(false);
 
     return (
@@ -21,8 +21,8 @@ const App = () => {
 }
 
 const init = () => {
-    const root = createRoot(document.getElementById('app'));
-    root.render(<App />);
+    const root = createRoot(document.getElementById('creator'));
+    root.render(<Creator />);
 }
 
 window.onload = init;
