@@ -149,7 +149,6 @@ const updateProject = async (req, res) => {
 }
 
 module.exports = {
-  creatorPage,
   getProjects,
   getProject,
   createProject,
