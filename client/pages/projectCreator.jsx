@@ -14,7 +14,10 @@ const Creator = () => {
                 <ProjectForm action={"create"} triggerReload={() => setReloadProjects(!reloadProjects)} />
             </div>
             <div id='domos'>
-                <ProjectList projects={[]} reloadProjectState={reloadProjects} triggerReload={() => setReloadProjects(!reloadProjects)} />
+                <ProjectList projects={[]} 
+                editable={true} 
+                reloadProjectState={reloadProjects} 
+                triggerReload={() => setReloadProjects(!reloadProjects)} />
             </div>
         </div>
     );

@@ -89,9 +89,11 @@ const ProjectDisplay = (props) => {
         return project.isFeatured;
     };
 
-    return <div id='domos'>
-        <ProjectList projects={[]} filters={[featuredFilter]} reloadProjectState={reloadProjects} triggerReload={() => setReloadProjects(!reloadProjects)} />
-    </div>;
+    return <ProjectList
+        projects={[]}
+        filters={[featuredFilter]}
+        reloadProjectState={reloadProjects}
+        triggerReload={() => setReloadProjects(!reloadProjects)} />;
 }
 
 const init = () => {
