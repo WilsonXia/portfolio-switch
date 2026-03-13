@@ -1,8 +1,8 @@
 const creatorPage = (req, res) => { return res.render('creator'); }
 
-const loginPage = (req, res) => res.render('login');
+const homePage = (req, res) => res.render('home');
 
 module.exports = {
     creatorPage,
-    loginPage,
+    homePage,
 };

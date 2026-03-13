@@ -2,8 +2,8 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        creator: './client/projectCreator.jsx',
-        login: './client/login.jsx',
+        creator: './client/pages/projectCreator.jsx',
+        home: './client/pages/home.jsx',
     },
     module: {
         rules: [

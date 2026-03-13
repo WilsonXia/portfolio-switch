@@ -1,8 +1,8 @@
-const helper = require('./helper.js');
+const helper = require('../helper.js');
 const React = require('react');
 const { useState } = React;
 const { createRoot } = require('react-dom/client');
-const { ProjectList } = require('./ProjectList.jsx');
+const { ProjectList } = require('../ProjectList.jsx');
 
 const handleLogin = (e) => {
     // Prevent Default
@@ -56,7 +56,7 @@ const LoginWindow = (props) => {
             <label htmlFor="username">Username: </label>
             <input type="text" id="user" name="username" placeholder="username" />
             <label htmlFor="password">Password: </label>
-            <input type="text" id="pass" name='pass' placeholder='password' />
+            <input type="password" id="pass" name='pass' placeholder='password' />
             <input className='formSubmit' type='submit' value="Sign In" />
         </form>
     )

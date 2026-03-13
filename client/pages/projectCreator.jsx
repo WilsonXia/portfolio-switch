@@ -1,9 +1,9 @@
-const helper = require('./helper.js');
+const helper = require('../helper.js');
 const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
-const { ProjectForm } = require('./ProjectForm.jsx');
-const { ProjectList } = require('./ProjectList.jsx');
+const { ProjectForm } = require('../ProjectForm.jsx');
+const { ProjectList } = require('../ProjectList.jsx');
 
 const Creator = () => {
     const [reloadProjects, setReloadProjects] = useState(false);

@@ -48,10 +48,6 @@ const checkProjectData = (project) => {
   return {};
 }
 
-const creatorPage = (req, res) => {
-  return res.render('app');
-};
-
 const getProjects = async (req, res) => {
   try {
     const docs = await Project.find({}).lean().exec();

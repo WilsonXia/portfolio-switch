@@ -2,8 +2,6 @@ const models = require('../models');
 
 const { Account } = models;
 
-const loginPage = (req, res) => res.render('login');
-
 const logout = (req, res) => {
   // Destroys session cookie
   req.session.destroy();

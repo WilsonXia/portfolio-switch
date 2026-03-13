@@ -6,7 +6,7 @@ const router = (app) => {
   // app.get('/getProjects', mid.requiresLogin, controllers.Project.getProjects);
   app.get('/getProject', mid.requiresLogin, controllers.Project.getProject);
 
-  app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Page.loginPage);
+  app.get('/home', mid.requiresSecure, mid.requiresLogout, controllers.Page.homePage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
 
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
@@ -17,7 +17,7 @@ const router = (app) => {
   app.post('/create', mid.requiresLogin, controllers.Project.createProject);
   app.post('/update', mid.requiresLogin, controllers.Project.updateProject);
 
-  app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Page.loginPage);
+  app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Page.homePage);
 };
 
 module.exports = router;
