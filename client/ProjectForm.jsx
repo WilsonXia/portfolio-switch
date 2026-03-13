@@ -8,7 +8,7 @@ const { ProjectTagSelector } = require('./ProjectTagSelector.jsx');
 const checkData = (formData, props) => {
     // Destructure Form to
     // Check if required form data is submitted
-    return true;
+    // return true;
     const { name, externalLink, githubLink } = helper.convertFormData(formData);
     // Checks
     if (!name) {
@@ -102,11 +102,11 @@ const ProjectForm = (props) => {
     useEffect(() => {
         const loadProjectFromServer = async () => {
             // const qParams = {projectID: props.projectID};
+            console.log("data loading...");
             const response = await fetch(`/getProject?projectID=${props.projectID}`, {
                 method: 'GET',
             });
             const data = await response.json();
-            console.log("data loaded");
 
             setProject(data.project);
             setTags(data.project.tags.filter(Boolean));

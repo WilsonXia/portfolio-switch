@@ -83,8 +83,14 @@ const SignupWindow = (props) => {
 
 const ProjectDisplay = (props) => {
     const [reloadProjects, setReloadProjects] = useState(false);
+
+    const featuredFilter = (project) => {
+        console.log(project.isFeatured);
+        return project.isFeatured;
+    };
+
     return <div id='domos'>
-        <ProjectList projects={[]} reloadProjectState={reloadProjects} triggerReload={() => setReloadProjects(!reloadProjects)} />
+        <ProjectList projects={[]} filters={[featuredFilter]} reloadProjectState={reloadProjects} triggerReload={() => setReloadProjects(!reloadProjects)} />
     </div>;
 }
 
