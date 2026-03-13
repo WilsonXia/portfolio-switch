@@ -137,7 +137,7 @@ const ProjectForm = (props) => {
                 action={props.action} onChange={handleTextChange} />
 
             <label>Is Featured:
-                <input type='checkbox' name="isFeatured" checked={project.isFeatured}
+                <input className='star' type='checkbox' name="isFeatured" checked={project.isFeatured}
                     onChange={handleCheckboxChange} /></label>
 
             <label>Upload Images: </label>
@@ -147,7 +147,7 @@ const ProjectForm = (props) => {
                 name='imageFile'
                 onChange={handleImageUpload}
             />
-            <input className='submitBtn' type='submit' value={formChanges.submit} />
+            <input className='submit button' type='submit' value={formChanges.submit} />
         </form>)
 }
 

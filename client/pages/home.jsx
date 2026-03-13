@@ -102,6 +102,8 @@ const init = () => {
 
     const root = createRoot(document.getElementById('content'));
 
+    root.render(<ProjectDisplay />);
+    
     loginButton.addEventListener('click', (e) => {
         e.preventDefault();
         root.render(<LoginWindow />);
