@@ -19,14 +19,25 @@ const TextInput = (props) => {
     }
 
     return (<>
-        <label>{props.inputName}:
+        <div class="field">
+            <label class="label">{props.inputName}</label>
+            <div class="control">
+                <input
+                    type={props.usePass ? "password" : "text"}
+                    name={inputNameL}
+                    placeholder={props.placeholder}
+                    onChange={props.onChange}
+                    value={props.value} />
+            </div>
+        </div>
+        {/* <label>:
             <input type="text"
                 // id={props.action + inputNameL}
                 name={inputNameL}
                 placeholder={props.placeholder}
                 onChange={props.onChange}
                 value={props.value} />
-        </label>
+        </label> */}
     </>);
 }
 
