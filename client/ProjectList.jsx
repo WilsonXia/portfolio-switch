@@ -45,7 +45,7 @@ const ProjectList = (props) => {
     });
 
     return (
-        <div className='projectList'>
+        <div className='projectList container'>
             {projectNodes}
         </div>
     );
