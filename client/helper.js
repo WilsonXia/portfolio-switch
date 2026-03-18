@@ -68,8 +68,15 @@ const convertFormData = (formData) => {
     return formObject;
 }
 
+const toggleBurger = () => {
+    // Get the nav-menu and toggle it
+    const navMenu = document.querySelector(".navbar-menu");
+    navMenu.classList.toggle("is-active");
+} 
+
 module.exports = {
     convertFormData,
+    toggleBurger,
     hideError,
     handleError,
     sendPost,

@@ -3,14 +3,14 @@ const React = require('react');
 const { useState } = React;
 const { createRoot } = require('react-dom/client');
 const { ProjectList } = require('../ProjectList.jsx');
-const {TextInput } = require('../TextInput.jsx');
+const { TextInput } = require('../TextInput.jsx');
 
 const handleLogin = (e, formData) => {
     // Prevent Default
     e.preventDefault();
     helper.hideError();
 
-    const {username, pass} = formData;
+    const { username, pass } = formData;
     // const pass = e.target.querySelector('#pass').value;
 
     if (!username || !pass) {
@@ -51,25 +51,21 @@ const LoginWindow = (props) => {
     return (
         <form id="loginForm"
             name="loginForm"
-            onSubmit={e => handleLogin(e, {username, pass})}
+            onSubmit={e => handleLogin(e, { username, pass })}
             action="/login"
             method="POST"
-            className="mainForm"
         >
             <TextInput inputName={"Username"} placeholder={""} value={username}
-                            action={props.action} onChange={(e)=>{setUsername(e.target.value)}} />
+                action={props.action} onChange={(e) => { setUsername(e.target.value) }} />
             <TextInput inputName={"Password"} placeholder={""} value={pass} usePass={true}
-                            action={props.action} onChange={(e)=>{setPass(e.target.value)}} />
-            {/* <div class="field">
-                <label class="label">Name</label>
+                action={props.action} onChange={(e) => { setPass(e.target.value) }} />
+
+            <div class="field">
                 <div class="control">
-                    <input type="text" id="user" name="username" placeholder="username" />
+                    <input className='submit button' type='submit' value="Sign In" />
                 </div>
             </div>
-            <label className='field'>Password:
-                <input type="password" id="pass" name='pass' placeholder='password' />
-            </label> */}
-            <input className='submit' type='submit' value="Sign In" />
+            
         </form>
     )
 }
@@ -111,10 +107,17 @@ const ProjectDisplay = (props) => {
 const init = () => {
     const loginButton = document.getElementById('loginButton');
     const signupButton = document.getElementById('signupButton');
+    const burger = document.getElementById('burger');
+
 
     const root = createRoot(document.getElementById('content'));
-
     root.render(<ProjectDisplay />);
+
+    burger.addEventListener('click', (e) => {
+        e.preventDefault();
+        helper.toggleBurger();
+        return false;
+    });
 
     loginButton.addEventListener('click', (e) => {
         e.preventDefault();

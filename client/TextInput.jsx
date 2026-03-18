@@ -24,6 +24,7 @@ const TextInput = (props) => {
             <div class="control">
                 <input
                     type={props.usePass ? "password" : "text"}
+                    className='input'
                     name={inputNameL}
                     placeholder={props.placeholder}
                     onChange={props.onChange}

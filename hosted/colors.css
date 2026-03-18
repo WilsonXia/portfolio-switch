@@ -1,0 +1,52 @@
+body {
+    background-color: white;
+}
+
+.navbar {
+    background-color: white;
+}
+
+.navbar-start a {
+    color: #4bb4ff;
+}
+
+.navbar-start a:hover, 
+.navbar-start a:focus {
+    color: white;
+    background-color: #4bb4ff;
+}
+
+.navbar-menu {
+    background-color: white;
+}
+
+.submit{
+    background-color: #4bb4ff;
+    color: white;
+    border-color: #30a9ff;
+}
+
+.projectTile {
+    color: black;
+}
+
+.projectTile:hover,
+.projectTile:focus {
+    outline: 8px solid #4bb4ff;
+}
+
+.projectList {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.label {
+    color: black;
+}
+
+.input {
+    background-color: white;
+}
+
+#errorBox {
+    color: red;
+}
