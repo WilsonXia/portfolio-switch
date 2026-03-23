@@ -31,8 +31,9 @@ body {
 }
 
 .projectTile:hover,
-.projectTile:focus {
-    outline: 8px solid #4bb4ff;
+.projectTile:active {
+    outline: 5px solid #4bb4ff;
+    border-radius: 1px;
 }
 
 .projectList {
@@ -40,6 +41,7 @@ body {
 }
 
 .label {
+    background-color: white;
     color: black;
 }
 

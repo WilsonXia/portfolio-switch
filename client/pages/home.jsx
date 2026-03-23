@@ -2,7 +2,8 @@ const helper = require('../helper.js');
 const React = require('react');
 const { useState } = React;
 const { createRoot } = require('react-dom/client');
-const { ProjectList } = require('../ProjectList.jsx');
+
+const { ProjectDisplay } = require('../ProjectDisplay.jsx');
 const { TextInput } = require('../TextInput.jsx');
 
 const handleLogin = (e, formData) => {
@@ -65,7 +66,7 @@ const LoginWindow = (props) => {
                     <input className='submit button' type='submit' value="Sign In" />
                 </div>
             </div>
-            
+
         </form>
     )
 }
@@ -89,20 +90,7 @@ const SignupWindow = (props) => {
     )
 }
 
-const ProjectDisplay = (props) => {
-    const [reloadProjects, setReloadProjects] = useState(false);
 
-    const featuredFilter = (project) => {
-        console.log(project.isFeatured);
-        return project.isFeatured;
-    };
-
-    return <ProjectList
-        projects={[]}
-        filters={[featuredFilter]}
-        reloadProjectState={reloadProjects}
-        triggerReload={() => setReloadProjects(!reloadProjects)} />;
-}
 
 const init = () => {
     const loginButton = document.getElementById('loginButton');

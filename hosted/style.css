@@ -14,15 +14,16 @@ form {
 }
 
 .projectTile {
-    max-width: 20rem;
+    min-width: 20rem;
     aspect-ratio: 1/1;
     /* Possibly replace background color with a template photo */
-    background-color: rgba(7, 139, 255, 0.441); 
+    background-color: rgba(7, 139, 255, 0.441);
     background-position: center;
     margin-left: 10px;
 }
 
 .projectList {
+    display: flex;
     background-color: rgba(0,0,0, 0.5);
     padding: 16px;
     margin-top: 2rem;

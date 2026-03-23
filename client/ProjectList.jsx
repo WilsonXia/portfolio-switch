@@ -35,7 +35,6 @@ const ProjectList = (props) => {
     }
 
     const projectNodes = projects.map(project => {
-        // Refactor this into a ProjectTile Component + an EditProjectTile Component
         return (
             <ProjectTile project={project}
             editable={props.editable} 

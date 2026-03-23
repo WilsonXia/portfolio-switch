@@ -5,6 +5,18 @@ const handleError = (message) => {
     document.getElementById('errorBox').classList.remove('hidden');
 };
 
+const handleProjectSelect = (project) => {
+    // console.log(`${project.name} was selected!`);
+    // grab all element ids and match them
+    document.getElementById('projectPopup').classList.remove('hidden');
+    document.getElementById('popupName').textContent = project.name;
+    document.getElementById('popupTags').textContent = project.tags;
+    document.getElementById('popupLink').href = project.externalLink;
+    document.getElementById('popupGithub').href = project.githubLink;
+    document.getElementById('popupFeatured').textContent = project.isFeatured;
+    document.getElementById('popupCover').src = project.images[0];
+}
+
 const hideError = () => {
     if (document.getElementById('errorBox'))
         document.getElementById('errorBox').classList.add('hidden');
@@ -79,6 +91,7 @@ module.exports = {
     toggleBurger,
     hideError,
     handleError,
+    handleProjectSelect,
     sendPost,
     sendPostFile
 }
