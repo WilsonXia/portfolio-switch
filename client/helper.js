@@ -14,7 +14,8 @@ const handleProjectSelect = (project) => {
     document.getElementById('popupLink').href = project.externalLink;
     document.getElementById('popupGithub').href = project.githubLink;
     document.getElementById('popupFeatured').textContent = project.isFeatured;
-    document.getElementById('popupCover').src = project.images[0];
+    document.getElementById('popupCover').style.backgroundImage = `url(${project.images[0]})`;
+    
 }
 
 const hideError = () => {
