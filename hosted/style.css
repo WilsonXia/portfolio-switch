@@ -13,24 +13,28 @@ form {
     margin: 2rem;
     padding: 1rem;
 }
+/* 
+li:has(.emptyTile){
+    max-width: 50%;
+} */
 
 .projectTile {
+    max-width: 25vw;
     min-width: 20vw;
     aspect-ratio: 1/1;
     /* Possibly replace background color with a template photo */
     background-color: rgba(7, 139, 255, 0.441);
     background-position: center;
-    margin-left: 10px;
+    /* margin-right: 10rem; */
 }
 
 .projectList {
-    display: flex;
-    background-color: rgba(0,0,0, 0.5);
+    /* display: flex; */
+    /* background-color: rgba(0,0,0, 0.5); */
     padding: 16px;
-    margin-top: 2rem;
-    border-radius: 10px;
+    margin-top: 8rem;
     /* Scrolling for later */
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 #errorBox {
