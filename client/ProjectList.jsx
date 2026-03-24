@@ -2,24 +2,44 @@ const helper = require('./helper.js');
 const React = require('react');
 const { useState, useEffect } = React;
 const { ProjectTile } = require('./ProjectTile.jsx');
+const Carousel = require('react-multi-carousel').default;
+require('react-multi-carousel/lib/styles.css');
 
 const ProjectList = (props) => {
     const [projects, setProjects] = useState(props.projects);
+
+    const responsive = {
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3,
+            slidesToSlide: 3 // optional, default to 1.
+        },
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2,
+            slidesToSlide: 2 // optional, default to 1.
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1,
+            slidesToSlide: 1 // optional, default to 1.
+        }
+    };
 
     useEffect(() => {
         const loadProjectsFromServer = async () => {
             const response = await fetch('/getProjects');
             const data = await response.json();
             // Filters
-            if(props.filters && props.filters.length > 0){
+            if (props.filters && props.filters.length > 0) {
                 let filteredData = data.projects;
                 // Filter for each filter inside the props.filters
-                for (let filterMethod of props.filters){
+                for (let filterMethod of props.filters) {
                     filteredData.filter(filterMethod);
                 }
                 setProjects(filteredData);
             }
-            else{
+            else {
                 setProjects(data.projects);
             }
         };
@@ -37,17 +57,20 @@ const ProjectList = (props) => {
     const projectNodes = projects.map(project => {
         return (
             <ProjectTile project={project}
-            editable={props.editable} 
-            reloadProjectState={props.reloadProjectState}
-            triggerReload={props.triggerReload}/>
+                editable={props.editable}
+                reloadProjectState={props.reloadProjectState}
+                triggerReload={props.triggerReload} />
         );
     });
+    console.log(Carousel);
 
     return (
-        <div className='projectList container'>
+        <Carousel 
+            responsive={responsive}
+        >
             {projectNodes}
-        </div>
+        </Carousel>
     );
 }
 
-module.exports = {ProjectList};
+module.exports = { ProjectList };

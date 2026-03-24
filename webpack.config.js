@@ -13,6 +13,20 @@ module.exports = {
                 use: {
                     loader: "babel-loader",
                 },
+            },
+            {
+                test: /\.css$/,
+                exclude: /hosted/,
+                use: [
+                    { loader: 'style-loader' },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            name: '[name]styleInject.[ext]',
+                            output: path.resolve(__dirname, 'hosted'),
+                        }
+                    },
+                ]
             }
         ],
     },

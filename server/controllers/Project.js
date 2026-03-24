@@ -42,7 +42,7 @@ const checkProjectData = (project) => {
     return { error: `No 'tags' were sent` };
   }
 
-  if (!project.externalLink || !project.githubLink) {
+  if (!project.externalLink && !project.githubLink) {
     return { error: `No 'link' was sent` };
   }
   return {};

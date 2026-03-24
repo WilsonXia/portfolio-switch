@@ -21,7 +21,7 @@ const checkData = (formData, props) => {
         return false;
     }
 
-    if (!externalLink || !githubLink) {
+    if (!externalLink && !githubLink) {
         helper.handleError('A link is required');
         return false;
     }
