@@ -10,13 +10,31 @@ const { ProjectForm } = require('./ProjectForm.jsx');
 // reloadProjectState
 const ProjectTile = (props) => {
     const [project, setProject] = useState(props.project);
+    const mousePos = {x: 0, y:0}
+    const dragThreshold = 10;
 
+    // TODO: make onMouseEnter switch on a small header of the project name
+    //          to display to the user
     return (
         <div key={project._id} className='projectTile'
-            onClick={
+            onMouseEnter={
                 () => {
-                    // console.log();
-                    helper.handleProjectSelect(project);
+                    console.log(`${project.name} should highlight`);
+                }
+            }
+            onMouseUp={
+                (e) => {
+                    if(Math.abs(e.screenX - mousePos.x) < dragThreshold && 
+                    Math.abs(e.screenY - mousePos.y) < dragThreshold){
+                        helper.handleProjectSelect(project);
+                    }
+                }
+            }
+            onMouseDown={
+                (e) => {
+                    mousePos.x = e.screenX;
+                    mousePos.y = e.screenY;
+                    console.log(mousePos);
                 }
             }
             style={{
