@@ -19,13 +19,7 @@ module.exports = {
                 exclude: /hosted/,
                 use: [
                     { loader: 'style-loader' },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            name: '[name]styleInject.[ext]',
-                            output: path.resolve(__dirname, 'hosted'),
-                        }
-                    },
+                    { loader: 'css-loader' },
                 ]
             }
         ],

@@ -34,15 +34,14 @@ body {
     color: black;
 }
 
-.projectTile:hover,
-.projectTile:active {
+.tileHover {
     outline: 5px solid #4bb4ff;
     border-radius: 1px;
 }
 
-.projectList {
+/* .projectList {
     background-color: rgba(0, 0, 0, 0.5);
-}
+} */
 
 .label {
     background-color: white;
@@ -50,6 +49,10 @@ body {
 }
 
 .input {
+    background-color: white;
+}
+
+#loginForm {
     background-color: white;
 }
 

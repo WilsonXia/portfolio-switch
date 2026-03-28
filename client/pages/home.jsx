@@ -50,24 +50,37 @@ const LoginWindow = (props) => {
     const [username, setUsername] = useState("");
     const [pass, setPass] = useState("");
     return (
-        <form id="loginForm"
-            name="loginForm"
-            onSubmit={e => handleLogin(e, { username, pass })}
-            action="/login"
-            method="POST"
-        >
-            <TextInput inputName={"Username"} placeholder={""} value={username}
-                action={props.action} onChange={(e) => { setUsername(e.target.value) }} />
-            <TextInput inputName={"Password"} placeholder={""} value={pass} usePass={true}
-                action={props.action} onChange={(e) => { setPass(e.target.value) }} />
+        <div id='loginPopup' className='hidden popup'>
+            <div className='container'>
+                <form id="loginForm"
+                    name="loginForm"
+                    onSubmit={e => handleLogin(e, { username, pass })}
+                    action="/login"
+                    method="POST"
+                >
+                    <TextInput inputName={"Username"} placeholder={""} value={username}
+                        action={props.action} onChange={(e) => { setUsername(e.target.value) }} />
+                    <TextInput inputName={"Password"} placeholder={""} value={pass} usePass={true}
+                        action={props.action} onChange={(e) => { setPass(e.target.value) }} />
 
-            <div class="field">
-                <div class="control">
-                    <input className='submit button' type='submit' value="Sign In" />
-                </div>
+                    <div class="field is-grouped is-grouped-centered">
+                        <div className="control">
+                            <input className='submit button' type='submit' value="Sign In" />
+                        </div>
+                        <div id='popupClose' className='control'>
+                            <button className='button'
+                                onClick={
+                                    (e) => {
+                                        e.preventDefault();
+                                        document.getElementById('loginPopup').classList.toggle('hidden')
+                                        return false;
+                                    }
+                                }>Close</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-        </form>
+        </div>
     )
 }
 const SignupWindow = (props) => {
@@ -90,16 +103,23 @@ const SignupWindow = (props) => {
     )
 }
 
+const Home = () => {
+    return (
+        <>
+            <LoginWindow />
+            <ProjectDisplay />
+        </>
+    );
 
+}
 
 const init = () => {
     const loginButton = document.getElementById('loginButton');
     const signupButton = document.getElementById('signupButton');
     const burger = document.getElementById('burger');
 
-
     const root = createRoot(document.getElementById('content'));
-    root.render(<ProjectDisplay />);
+    root.render(<Home />);
 
     burger.addEventListener('click', (e) => {
         e.preventDefault();
@@ -109,18 +129,17 @@ const init = () => {
 
     loginButton.addEventListener('click', (e) => {
         e.preventDefault();
-        root.render(<LoginWindow />);
+        document.getElementById('loginPopup').classList.toggle('hidden');
         return false;
     });
 
     signupButton.addEventListener('click', (e) => {
         e.preventDefault();
-        root.render(<ProjectDisplay />);
+        // root.render(<ProjectDisplay />);
         return false;
     });
 }
 
 window.onload = () => {
     init();
-    console.log("just loaded");
 };

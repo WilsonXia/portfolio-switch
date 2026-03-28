@@ -25,16 +25,23 @@ li:has(.emptyTile){
     /* Possibly replace background color with a template photo */
     background-color: rgba(7, 139, 255, 0.441);
     background-position: center;
+    background-size: "cover";
     /* margin-right: 10rem; */
 }
 
+.tileLabel {
+    text-align: center;
+    position: relative;
+    top: -13%;
+    font-weight: 300;
+    color: rgba(7, 139, 255, 1);
+    user-select: none;
+}
+
 .projectList {
-    /* display: flex; */
-    /* background-color: rgba(0,0,0, 0.5); */
     padding: 16px;
+    padding-top: 42px;
     margin-top: 8rem;
-    /* Scrolling for later */
-    /* overflow-x: hidden; */
 }
 
 #errorBox {
@@ -44,7 +51,8 @@ li:has(.emptyTile){
 }
 
 #loginForm {
-    width: 50%;
+    /* width: 50%; */
+    padding: 30px 50px;
     justify-self: center;
     border: 1px solid black;
     border-radius: 6px;
