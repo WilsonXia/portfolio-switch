@@ -15,7 +15,13 @@ const handleProjectSelect = (project) => {
     document.getElementById('popupGithub').href = project.githubLink;
     document.getElementById('popupFeatured').textContent = project.isFeatured;
     document.getElementById('popupCover').style.backgroundImage = `url(${project.images[0]})`;
-    
+}
+
+const displayCurrentTime = () => {
+    const now = new Date();
+    // Use toLocaleTimeString() for easy formatting
+    const timeString = now.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+    document.getElementById("clock-display").innerHTML = timeString;
 }
 
 const hideError = () => {
@@ -85,11 +91,12 @@ const toggleBurger = () => {
     // Get the nav-menu and toggle it
     const navMenu = document.querySelector(".navbar-menu");
     navMenu.classList.toggle("is-active");
-} 
+}
 
 module.exports = {
     convertFormData,
     toggleBurger,
+    displayCurrentTime,
     hideError,
     handleError,
     handleProjectSelect,

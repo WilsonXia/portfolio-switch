@@ -1,7 +1,8 @@
 @import "./colors.css";
 @import "./projectPopup.css";
 
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -9,14 +10,29 @@ html, body {
     overflow-x: hidden;
 }
 
+.level {
+    width: 30%;
+    padding: 12px 16px;
+    border-radius: 50px;
+}
+
 form {
     margin: 2rem;
     padding: 1rem;
 }
-/* 
-li:has(.emptyTile){
-    max-width: 50%;
-} */
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.projectList {
+    padding: 2rem; /*16px*/
+    padding-top: 4rem;
+    margin-top: 4rem;
+    margin-bottom: 1rem;
+}
 
 .projectTile {
     max-width: 25vw;
@@ -25,23 +41,19 @@ li:has(.emptyTile){
     /* Possibly replace background color with a template photo */
     background-color: rgba(7, 139, 255, 0.441);
     background-position: center;
-    background-size: "cover";
-    /* margin-right: 10rem; */
+    background-size: cover;
 }
 
 .tileLabel {
+    user-select: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     text-align: center;
     position: relative;
-    top: -13%;
+    top: -3rem;
     font-weight: 300;
     color: rgba(7, 139, 255, 1);
-    user-select: none;
-}
-
-.projectList {
-    padding: 16px;
-    padding-top: 42px;
-    margin-top: 8rem;
 }
 
 #errorBox {
@@ -58,8 +70,18 @@ li:has(.emptyTile){
     border-radius: 6px;
 }
 
+#contactBar {
+    display: flex;
+    justify-content: center;
+}
+
 .submit {
     text-align: center;
+}
+
+.linkButton {
+    border-radius: 100%;
+    aspect-ratio: 1/1;
 }
 
 .hidden {

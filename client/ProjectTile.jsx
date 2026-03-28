@@ -57,7 +57,7 @@ const ProjectTile = (props) => {
             style={{
                 backgroundImage: `url(${project.images[0]})`,
             }}>
-            <h2 className='title is-9 tileLabel hidden'>{project.name}</h2>
+            <h2 className='title tileLabel hidden'>{project.name}</h2>
             {
                 props.editable ?
                     <div>

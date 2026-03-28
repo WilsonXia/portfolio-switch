@@ -59,3 +59,15 @@ body {
 #errorBox {
     color: red;
 }
+
+.level {
+    background-color: #CFCFCF;
+}
+
+.linkButton:hover {
+    background-color: rgba(0,0,0, 0.4);
+}
+
+.footer {
+    background-color: #CFCFCF;
+}

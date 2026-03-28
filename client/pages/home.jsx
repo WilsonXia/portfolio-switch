@@ -138,6 +138,9 @@ const init = () => {
         // root.render(<ProjectDisplay />);
         return false;
     });
+
+    helper.displayCurrentTime();
+    setInterval(helper.displayCurrentTime, 1000);
 }
 
 window.onload = () => {
