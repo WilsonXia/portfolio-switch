@@ -7,13 +7,17 @@ const handleError = (message) => {
 
 const handleProjectSelect = (project) => {
     // console.log(`${project.name} was selected!`);
+    console.log(project);
+    
     // grab all element ids and match them
     document.getElementById('projectPopup').classList.remove('hidden');
     document.getElementById('popupName').textContent = project.name;
     document.getElementById('popupTags').textContent = project.tags;
     document.getElementById('popupLink').href = project.externalLink;
     document.getElementById('popupGithub').href = project.githubLink;
-    document.getElementById('popupFeatured').textContent = project.isFeatured;
+    if(project.isFeatured){
+        document.getElementById('popupFeatured').src = "/assets/img/star-full.svg";
+    }
     document.getElementById('popupCover').style.backgroundImage = `url(${project.images[0]})`;
 }
 

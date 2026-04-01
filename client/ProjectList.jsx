@@ -69,6 +69,7 @@ const ProjectList = (props) => {
             // draggable={false}
             containerClass='projectList'
         >
+        {/* Manual offset for the carousel */}
             <div className='emptyTile'></div>
             {projectNodes}
             <div></div>

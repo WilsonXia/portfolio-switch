@@ -5,6 +5,7 @@ const { createRoot } = require('react-dom/client');
 
 const { ProjectDisplay } = require('../ProjectDisplay.jsx');
 const { TextInput } = require('../TextInput.jsx');
+const { ContactBar } = require('../ContactBar.jsx');
 
 const handleLogin = (e, formData) => {
     // Prevent Default
@@ -107,7 +108,11 @@ const Home = () => {
     return (
         <>
             <LoginWindow />
-            <ProjectDisplay />
+            <div
+            className='is-flex is-flex-direction-column'>
+                <ProjectDisplay />
+                <ContactBar />
+            </div>
         </>
     );
 
