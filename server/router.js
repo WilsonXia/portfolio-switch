@@ -15,6 +15,7 @@ const router = (app) => {
   app.get('/home', mid.requiresSecure, mid.requiresLogout, controllers.Page.homePage);
   app.get('/creator', mid.requiresLogin, controllers.Page.creatorPage);
   app.get('/projects', mid.requiresSecure, controllers.Page.projectsPage);
+  app.get('*', mid.redirectHome);
 };
 
 module.exports = router;

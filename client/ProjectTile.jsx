@@ -49,7 +49,7 @@ const ProjectTile = (props) => {
     }
 
     return (
-        <div key={project._id} className='projectTile'
+        <div key={project._id} id={`project${props.index}`} className='tile projectTile'
             onMouseEnter={showProjectLabel}
             // onMouseLeave={hideProjectLabel}
             onMouseUp={checkForClick}

@@ -4,6 +4,7 @@ module.exports = {
     entry: {
         creator: './client/pages/projectCreator.jsx',
         home: './client/pages/home.jsx',
+        projects:  './client/pages/projects.jsx',
     },
     module: {
         rules: [

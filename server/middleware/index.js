@@ -26,11 +26,18 @@ const bypassSecure = (req, res, next) => {
   next();
 };
 
-module.exports.requiresLogin = requiresLogin;
-module.exports.requiresLogout = requiresLogout;
+const redirectHome = (req, res, next) => res.redirect('/');
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports.requiresSecure = requiresSecure;
-} else {
-  module.exports.requiresSecure = bypassSecure;
+module.exports = {
+  requiresLogin,
+  requiresLogout,
+  redirectHome,
+  requiresSecure: process.env.NODE_ENV === 'production' ? requiresSecure
+    : bypassSecure
 }
+
+// if (process.env.NODE_ENV === 'production') {
+//   module.exports.requiresSecure = requiresSecure;
+// } else {
+//   module.exports.requiresSecure = bypassSecure;
+// }

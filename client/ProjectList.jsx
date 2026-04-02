@@ -48,14 +48,15 @@ const ProjectList = (props) => {
     if (projects != null && projects.length === 0) {
         return (
             <div className='projectList'>
-                <h3 className='emptyList'>No Projects Yet!</h3>
+                <div className='tile'></div>
             </div>
         );
     }
 
-    const projectNodes = projects.map(project => {
+    const projectNodes = projects.map((project, i) => {
         return (
             <ProjectTile project={project}
+                index={i}
                 editable={props.editable}
                 reloadProjectState={props.reloadProjectState}
                 triggerReload={props.triggerReload} />
@@ -65,20 +66,23 @@ const ProjectList = (props) => {
     return (
         <Carousel
             responsive={responsive}
-            // arrows={false}
+            arrows={false}
             // draggable={false}
             containerClass='projectList'
+            itemClass='centerItems'
         >
             {/* Manual offset for the carousel */}
-            <div className='emptyTile'></div>
+            {/* <div className='tile'></div> */}
             {projectNodes}
-            <a id="loginButton" class="navbar-item" href="/login" onClick={
+            <a id="loginButton" href="/login" onClick={
                 (e) => {
                     e.preventDefault();
                     document.getElementById('loginPopup').classList.toggle('hidden');
                     return false;
                 }
-            }>Edit Projects</a>
+            }>
+                <h2 className='subtitle'>Edit Projects</h2>
+            </a>
         </Carousel>
     );
 }

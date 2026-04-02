@@ -38,19 +38,32 @@ footer {
     width: 100%;
 }
 
+.centerItems {
+    margin-left: 2rem;
+}
+
+.centerItems:nth-last-child(1) {
+    display: flex;
+    margin-left: 0;
+    justify-content: center;
+    align-items: center;
+}
+
 .projectList {
     padding: 2rem; /*16px*/
     padding-top: 4rem;
     margin-bottom: 1rem;
-    flex-grow: 1;
+    /* flex-grow: 1; */
 }
 
-.projectTile {
+.tile {
     max-width: 25vw;
     min-width: 20vw;
     aspect-ratio: 1/1;
+}
+
+.projectTile {
     /* Possibly replace background color with a template photo */
-    background-color: rgba(7, 139, 255, 0.441);
     background-position: center;
     background-size: cover;
 }
@@ -80,6 +93,20 @@ footer {
     justify-self: center;
     border: 1px solid black;
     border-radius: 6px;
+}
+
+#loginButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.5rem dashed var(--darken);
+    border-radius: 500px;
+    padding: 2rem;
+    margin-left: 1rem;
+    margin-right: auto;
+    max-width: 15vw;
+    min-width: 10vw;
+    aspect-ratio: 1/1;
 }
 
 #contactBar {

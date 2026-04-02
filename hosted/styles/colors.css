@@ -1,37 +1,74 @@
-body, .back-bar, .navbar, .navbar-menu, .input, #loginForm {
+@media (prefers-color-scheme: dark) {
+    .icon img {
+        filter: invert(100%);
+    }
+
+    .level,
+    .footer {
+        /* background-color: #CFCFCF; */
+        background-color: #2D2D2D;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+
+    .level,
+    .footer {
+        background-color: #CFCFCF;
+        /* background-color: #2D2D2D; */
+    }
+}
+
+:root {
+    --darken: rgba(0, 0, 0, 0.4);
+}
+
+body,
+.back-bar,
+.navbar,
+.navbar-menu,
+.input,
+#loginForm {
     background-color: var(--bulma-scheme-main);
 }
+
 
 /* .label {
     background-color: var(--bulma-scheme-main);
     color: black;
-} */
-
-
-.level, .footer {
-    /* background-color: #CFCFCF; */
-    background-color: #2D2D2D;
-}
+    } */
 
 .linkButton:hover {
-    background-color: rgba(0,0,0, 0.4);
+    background-color: var(--darken);
+}
+
+#loginButton * {
+    color: rgba(7, 139, 255, 1);
+}
+
+#loginButton:hover {
+    border-color: black;
 }
 
 .navbar-start a {
     color: #4bb4ff;
 }
 
-.navbar-start a:hover, 
+.navbar-start a:hover,
 .navbar-start a:focus {
     color: white;
     background-color: #4bb4ff;
 }
 
-.submit{
+.submit {
     background-color: #4bb4ff;
     color: white;
     border-color: #30a9ff;
 }
+
+/* .tile {
+    background-color: var(--darken);
+} */
 
 .tileHover {
     outline: 5px solid #4bb4ff;
