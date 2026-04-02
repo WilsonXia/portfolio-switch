@@ -20,6 +20,8 @@
 .navLabel {
     user-select: none;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
     position: absolute;
     padding-bottom: .7rem;
     bottom: -3rem;
