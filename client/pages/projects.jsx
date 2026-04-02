@@ -78,13 +78,23 @@ const Home = () => {
 }
 
 const init = () => {
-    console.log("works");
+    const homeNav = document.getElementById('homeNav');
+    const homeLabel = document.getElementById('homeLabel');
 
     // const signupButton = document.getElementById('signupButton');
     // const burger = document.getElementById('burger');
 
     const root = createRoot(document.getElementById('projectViewer'));
     root.render(<Home />);
+
+    
+    // Add events after rendering
+    homeNav.addEventListener('mouseenter', () => {
+        homeLabel.classList.remove('hidden');
+    });
+    homeNav.addEventListener('mouseleave', () => {
+        homeLabel.classList.add('hidden');
+    });
 
     // burger.addEventListener('click', (e) => {
     //     e.preventDefault();

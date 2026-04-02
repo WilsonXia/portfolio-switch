@@ -42,22 +42,26 @@ body,
     background-color: var(--darken);
 }
 
+.currentNav {
+    background-color: #4bb4ff !important;
+}
+
 #loginButton * {
     color: rgba(7, 139, 255, 1);
 }
 
 #loginButton:hover {
-    border-color: black;
+    border-color: #4bb4ff;
 }
 
 .navbar-start a {
     color: #4bb4ff;
+    border: #2D2D2D solid 3px;
 }
 
 .navbar-start a:hover,
 .navbar-start a:focus {
-    color: white;
-    background-color: #4bb4ff;
+    outline: 5px solid #4bb4ff;
 }
 
 .submit {
@@ -66,9 +70,9 @@ body,
     border-color: #30a9ff;
 }
 
-/* .tile {
-    background-color: var(--darken);
-} */
+.tile {
+    border: var(--bulma-scheme-main) solid 5px;
+}
 
 .tileHover {
     outline: 5px solid #4bb4ff;

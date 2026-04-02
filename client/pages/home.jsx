@@ -119,14 +119,28 @@ const Home = () => {
 }
 
 const init = () => {
-    console.log("works");
-
-    const loginButton = document.getElementById('loginButton');
+    const homeNav = document.getElementById('homeNav');
+    const homeLabel = document.getElementById('homeLabel');
+    const projectsNav = document.getElementById('projectsNav');
+    const projectsLabel = document.getElementById('projectsLabel');
     // const signupButton = document.getElementById('signupButton');
     // const burger = document.getElementById('burger');
 
     const root = createRoot(document.getElementById('content'));
     root.render(<Home />);
+
+    // homeNav.addEventListener('mouseenter', () => {
+    //     homeLabel.classList.remove('hidden');
+    // });
+    // homeNav.addEventListener('mouseleave', () => {
+    //     homeLabel.classList.add('hidden');
+    // });
+    projectsNav.addEventListener('mouseenter', () => {
+        projectsLabel.classList.remove('hidden');
+    });
+    projectsNav.addEventListener('mouseleave', () => {
+        projectsLabel.classList.add('hidden');
+    });
 
     // burger.addEventListener('click', (e) => {
     //     e.preventDefault();

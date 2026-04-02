@@ -1,5 +1,6 @@
 @import "./colors.css";
 @import "./projectPopup.css";
+@import "./navbar.css";
 
 @font-face {
     font-family: switch;
@@ -15,10 +16,6 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-}
-
-#content {
-    height: auto;
 }
 
 .level {
@@ -38,16 +35,7 @@ footer {
     width: 100%;
 }
 
-.centerItems {
-    margin-left: 2rem;
-}
 
-.centerItems:nth-last-child(1) {
-    display: flex;
-    margin-left: 0;
-    justify-content: center;
-    align-items: center;
-}
 
 .projectList {
     padding: 2rem; /*16px*/
