@@ -11,7 +11,7 @@ const ProjectInfoPopup = (props) => {
 
     const closePopup = () => {
         // Closes this popup
-        document.getElementById('projectPopup').classList.toggle('hidden');
+        document.getElementById('projectPopup').classList.add('hidden');
     }
 
     const CoverArt = () => {
@@ -37,7 +37,7 @@ const ProjectInfoPopup = (props) => {
     }
 
     return (
-        <div id='projectPopup' className='hidden popup'>
+        <div id='projectPopup' className='hidden popup' onClick={closePopup}>
             <div className='back-bar'>
                 <section className='popupProject'>
                     <CoverArt />

@@ -63,16 +63,22 @@ const ProjectList = (props) => {
     });
 
     return (
-        <Carousel 
+        <Carousel
             responsive={responsive}
             // arrows={false}
             // draggable={false}
             containerClass='projectList'
         >
-        {/* Manual offset for the carousel */}
+            {/* Manual offset for the carousel */}
             <div className='emptyTile'></div>
             {projectNodes}
-            <div></div>
+            <a id="loginButton" class="navbar-item" href="/login" onClick={
+                (e) => {
+                    e.preventDefault();
+                    document.getElementById('loginPopup').classList.toggle('hidden');
+                    return false;
+                }
+            }>Edit Projects</a>
         </Carousel>
     );
 }

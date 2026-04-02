@@ -25,27 +25,27 @@ const handleLogin = (e, formData) => {
     return false;
 }
 
-const handleSignup = (e) => {
-    e.preventDefault();
-    helper.hideError();
+// const handleSignup = (e) => {
+//     e.preventDefault();
+//     helper.hideError();
 
-    const username = e.target.querySelector('#user').value;
-    const pass = e.target.querySelector('#pass').value;
-    const pass2 = e.target.querySelector('#pass2').value;
+//     const username = e.target.querySelector('#user').value;
+//     const pass = e.target.querySelector('#pass').value;
+//     const pass2 = e.target.querySelector('#pass2').value;
 
-    if (!username || !pass || !pass2) {
-        helper.handleError('All fields are required!');
-        return false;
-    }
+//     if (!username || !pass || !pass2) {
+//         helper.handleError('All fields are required!');
+//         return false;
+//     }
 
-    if (pass !== pass2) {
-        helper.handleError('Passwords do not match!');
-        return false;
-    }
+//     if (pass !== pass2) {
+//         helper.handleError('Passwords do not match!');
+//         return false;
+//     }
 
-    helper.sendPost(e.target.action, { username, pass, pass2 });
-    return false;
-}
+//     helper.sendPost(e.target.action, { username, pass, pass2 });
+//     return false;
+// }
 
 const LoginWindow = (props) => {
     const [username, setUsername] = useState("");
@@ -84,32 +84,32 @@ const LoginWindow = (props) => {
         </div>
     )
 }
-const SignupWindow = (props) => {
-    return (
-        <form id="signupForm"
-            name="signupForm"
-            onSubmit={handleSignup}
-            action="/signup"
-            method="POST"
-            className="mainForm"
-        >
-            <label htmlFor="username">Username: </label>
-            <input type="text" id="user" name="username" placeholder="username" />
-            <label htmlFor="pass">Password: </label>
-            <input type="password" id="pass" name='pass' placeholder='password' />
-            <label htmlFor="pass">Password: </label>
-            <input type="password" id="pass2" name='pass2' placeholder='retype password' />
-            <input className='formSubmit' type='submit' value="Sign In" />
-        </form>
-    )
-}
+// const SignupWindow = (props) => {
+//     return (
+//         <form id="signupForm"
+//             name="signupForm"
+//             onSubmit={handleSignup}
+//             action="/signup"
+//             method="POST"
+//             className="mainForm"
+//         >
+//             <label htmlFor="username">Username: </label>
+//             <input type="text" id="user" name="username" placeholder="username" />
+//             <label htmlFor="pass">Password: </label>
+//             <input type="password" id="pass" name='pass' placeholder='password' />
+//             <label htmlFor="pass">Password: </label>
+//             <input type="password" id="pass2" name='pass2' placeholder='retype password' />
+//             <input className='formSubmit' type='submit' value="Sign In" />
+//         </form>
+//     )
+// }
 
 const Home = () => {
     return (
         <>
             <LoginWindow />
             <div
-            className='is-flex is-flex-direction-column'>
+                className='is-flex is-flex-direction-column'>
                 <ProjectDisplay />
                 <ContactBar />
             </div>
@@ -119,30 +119,26 @@ const Home = () => {
 }
 
 const init = () => {
+    console.log("works");
+
     const loginButton = document.getElementById('loginButton');
-    const signupButton = document.getElementById('signupButton');
-    const burger = document.getElementById('burger');
+    // const signupButton = document.getElementById('signupButton');
+    // const burger = document.getElementById('burger');
 
     const root = createRoot(document.getElementById('content'));
     root.render(<Home />);
 
-    burger.addEventListener('click', (e) => {
-        e.preventDefault();
-        helper.toggleBurger();
-        return false;
-    });
+    // burger.addEventListener('click', (e) => {
+    //     e.preventDefault();
+    //     helper.toggleBurger();
+    //     return false;
+    // });
 
-    loginButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('loginPopup').classList.toggle('hidden');
-        return false;
-    });
-
-    signupButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        // root.render(<ProjectDisplay />);
-        return false;
-    });
+    // signupButton.addEventListener('click', (e) => {
+    //     e.preventDefault();
+    //     // root.render(<ProjectDisplay />);
+    //     return false;
+    // });
 
     helper.displayCurrentTime();
     setInterval(helper.displayCurrentTime, 1000);

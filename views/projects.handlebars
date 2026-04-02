@@ -1,22 +1,51 @@
 <html lang="en">
+
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
   <title>Wilson Xia</title>
-  <link rel="shortcut icon" href="/assets/img/favicon.png"/>
-  <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
+  <link rel="shortcut icon" href="/assets/img/favicon.png" />
+  <link rel="stylesheet" type="text/css" href="/assets/styles/style.css" />
 </head>
-<body>
-  <nav><a href="/"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a href="/logout">Log out</a></div>
-  </nav>
-  <section id="projectViewer">
 
-  </section>
-  <div id="errorBox" class='hidden card has-background-warning'>
-      <h3><span id="errorMessage"></span></h3>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">
+      {{!-- <a id="burger" class="navbar-burger" role="button" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a> --}}
     </div>
-  {{!-- <script src="/assets/viewerBundle.js"></script> --}}
+    <div class="navbar-menu is-active">
+      <div class="navbar-start">
+        <a id="logoutButton" class="navbar-item" href="/logout">Log out</a>
+      </div>
+      <div class="navbar-end">
+        <div class="detailBox">
+          <p id="clock-display" class="label"></p>
+          <span class="icon">
+            <img src="/assets/img/wifi.svg" alt="wifi">
+          </span>
+          <p id="battery" class="label">94%</p>
+          <span class="icon">
+            <img src="/assets/img/battery.svg" alt="battery">
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section id="projectViewer">
+  </section>
+
+  <div id="errorBox" class='hidden card has-background-warning'>
+    <h3><span id="errorMessage"></span></h3>
+  </div>
+  {{!--
+  <script src="/assets/viewerBundle.js"></script> --}}
 </body>
+
 </html>
