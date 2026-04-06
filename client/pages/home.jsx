@@ -60,7 +60,7 @@ const AboutMePanel = () => {
                 <span className="icon is-large">
                     <img src="/assets/img/project.svg" alt="projects icon" />
                 </span>
-                <h2 id="projectsLabel" className="navLabel">Enter</h2>
+                <h2 id="projectsLabel" className="navLabel">View Projects!</h2>
             </a>
         </section>
     );

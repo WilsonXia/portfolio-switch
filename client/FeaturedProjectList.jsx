@@ -49,7 +49,7 @@ const FeaturedProjectList = (props) => {
             <div id='projects' className='container'>
                 {projectNodes}
             </div>
-            <h2 id="featureLabel" className='title is-3'>Featured!</h2>
+            <h2 id="featureLabel" className='title is-3'>Featured Projects!</h2>
         </div>
     );
 }
