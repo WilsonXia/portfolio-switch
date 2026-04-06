@@ -1,0 +1,34 @@
+#featuredList { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
+
+    gap: 2rem;
+}
+
+.featuredTile {
+    max-width: 25vw;
+    min-width: 20vw;
+    aspect-ratio: 4/3;
+}
+
+.projectsButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.5rem solid var(--darken);
+    border-radius: 500px;
+    padding: 2rem;
+    max-width: 15vw;
+    min-width: 10vw;
+    aspect-ratio: 1/1;
+    position: absolute;
+    left: auto;
+}
+
+#aboutMe {
+    padding: 6rem;
+    flex-grow: 3;
+}

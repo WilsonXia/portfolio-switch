@@ -16,7 +16,7 @@ const ProjectDisplay = (props) => {
     return (<>
         <ProjectList
             projects={[]}
-            filters={[featuredFilter]}
+            filters={props.featured ? [featuredFilter] : []}
             reloadProjectState={reloadProjects}
             triggerReload={() => setReloadProjects(!reloadProjects)} />
         <ProjectInfoPopup/>

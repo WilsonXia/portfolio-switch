@@ -3,27 +3,7 @@ const React = require('react');
 const { useState } = React;
 const { createRoot } = require('react-dom/client');
 
-const { ProjectDisplay } = require('../ProjectDisplay.jsx');
-const { TextInput } = require('../TextInput.jsx');
-const { ContactBar } = require('../ContactBar.jsx');
-
-const handleLogin = (e, formData) => {
-    // Prevent Default
-    e.preventDefault();
-    helper.hideError();
-
-    const { username, pass } = formData;
-    // const pass = e.target.querySelector('#pass').value;
-
-    if (!username || !pass) {
-        // Handle Error
-        helper.handleError('Username or password is empty!');
-        return false;
-    }
-
-    helper.sendPost(e.target.action, { username, pass });
-    return false;
-}
+const { FeaturedProjectList } = require('../FeaturedProjectList.jsx');
 
 // const handleSignup = (e) => {
 //     e.preventDefault();
@@ -47,43 +27,7 @@ const handleLogin = (e, formData) => {
 //     return false;
 // }
 
-const LoginWindow = (props) => {
-    const [username, setUsername] = useState("");
-    const [pass, setPass] = useState("");
-    return (
-        <div id='loginPopup' className='hidden popup'>
-            <div className='container'>
-                <form id="loginForm"
-                    name="loginForm"
-                    onSubmit={e => handleLogin(e, { username, pass })}
-                    action="/login"
-                    method="POST"
-                >
-                    <TextInput inputName={"Username"} placeholder={""} value={username}
-                        action={props.action} onChange={(e) => { setUsername(e.target.value) }} />
-                    <TextInput inputName={"Password"} placeholder={""} value={pass} usePass={true}
-                        action={props.action} onChange={(e) => { setPass(e.target.value) }} />
 
-                    <div class="field is-grouped is-grouped-centered">
-                        <div className="control">
-                            <input className='submit button' type='submit' value="Sign In" />
-                        </div>
-                        <div id='popupClose' className='control'>
-                            <button className='button'
-                                onClick={
-                                    (e) => {
-                                        e.preventDefault();
-                                        document.getElementById('loginPopup').classList.toggle('hidden')
-                                        return false;
-                                    }
-                                }>Close</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    )
-}
 // const SignupWindow = (props) => {
 //     return (
 //         <form id="signupForm"
@@ -104,43 +48,50 @@ const LoginWindow = (props) => {
 //     )
 // }
 
-const Home = () => {
+const AboutMePanel = () => {
     return (
-        <>
-            <LoginWindow />
-            <div
-                className='is-flex is-flex-direction-column'>
-                <ProjectDisplay />
-                <ContactBar />
-            </div>
-        </>
+        <section id="aboutMe">
+            <h1 className="title">Wilson Xia</h1>
+            <h2 className="subtitle">Your Future Dev Partner</h2>
+
+            <a className="projectsButton" href="/projects">
+                <span className="icon">
+                    <img src="/assets/img/project.svg" alt="projects icon" />
+                </span>
+                <h2 id="projectsLabel" className="navLabel">Enter</h2>
+            </a>
+        </section>
+    );
+}
+
+const Home = () => {
+    const [reloadProjects, setReloadProjects] = useState(false);
+
+    const featuredFilter = (project) => {
+        console.log(project.isFeatured);
+        return project.isFeatured;
+    };
+    return (
+        <div
+            className='is-flex'>
+            <FeaturedProjectList
+                projects={[]}
+                filters={[featuredFilter]}
+                reloadProjectState={reloadProjects}
+                triggerReload={() => setReloadProjects(!reloadProjects)}
+            />
+            <AboutMePanel />
+        </div>
     );
 
 }
 
 const init = () => {
-    const homeNav = document.getElementById('homeNav');
-    const homeLabel = document.getElementById('homeLabel');
-    const projectsNav = document.getElementById('projectsNav');
-    const projectsLabel = document.getElementById('projectsLabel');
     // const signupButton = document.getElementById('signupButton');
     // const burger = document.getElementById('burger');
 
     const root = createRoot(document.getElementById('content'));
     root.render(<Home />);
-
-    // homeNav.addEventListener('mouseenter', () => {
-    //     homeLabel.classList.remove('hidden');
-    // });
-    // homeNav.addEventListener('mouseleave', () => {
-    //     homeLabel.classList.add('hidden');
-    // });
-    projectsNav.addEventListener('mouseenter', () => {
-        projectsLabel.classList.remove('hidden');
-    });
-    projectsNav.addEventListener('mouseleave', () => {
-        projectsLabel.classList.add('hidden');
-    });
 
     // burger.addEventListener('click', (e) => {
     //     e.preventDefault();
