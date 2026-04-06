@@ -25,13 +25,24 @@
 
 body,
 .back-bar,
-.navbar,
-.navbar-menu,
+/* .navbar,
+.navbar-menu, */
 .input,
 #loginForm {
     background-color: var(--bulma-scheme-main);
 }
 
+.navbar,
+.navbar-menu
+{
+    background-color: rgba(0,0,0,0);
+}
+
+
+.bottomLabel {
+    color: white;
+    background-color: var(--darken);
+}
 
 /* .label {
     background-color: var(--bulma-scheme-main);
@@ -50,8 +61,9 @@ body,
     color: rgba(7, 139, 255, 1);
 }
 
-#loginButton:hover {
+#loginButton:hover, .projectsButton:hover {
     border-color: #4bb4ff;
+    background-color: var(--darken);
 }
 
 .navbar-start a {

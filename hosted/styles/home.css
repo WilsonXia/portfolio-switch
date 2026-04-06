@@ -1,17 +1,53 @@
+#homeMain {
+    position: absolute;
+    top: 0;
+    display: flex;
+    gap: 3rem;
+    height: 100%;
+    width: 100%;
+}
+
 #featuredList { 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 5px solid black;
+    border: 1rem solid black;
+    flex-grow: 1;
+}
 
-    gap: 2rem;
+#featureLabel {
+    background-color: black;
+    padding: 2rem;
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+
+    flex-grow: 1;
+}
+
+#projects {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    gap: 1rem;
+    padding: 0 0.8rem;
+
+    flex-grow: 3;
 }
 
 .featuredTile {
-    max-width: 25vw;
-    min-width: 20vw;
-    aspect-ratio: 4/3;
+    position: relative;
+    flex-grow: 1;
+    min-height: 6rem;
+    width: 100%;
+}
+
+.bottomLabel {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }
 
 .projectsButton {
@@ -24,11 +60,21 @@
     max-width: 15vw;
     min-width: 10vw;
     aspect-ratio: 1/1;
-    position: absolute;
-    left: auto;
 }
 
 #aboutMe {
-    padding: 6rem;
-    flex-grow: 3;
+    position: relative;
+    flex-grow: 6;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+#description {
+    position: absolute;
+    padding: 2rem;
+    left: 2rem;
+    top: 4rem;
+}
+

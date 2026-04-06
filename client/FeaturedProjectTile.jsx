@@ -11,13 +11,16 @@ const FeaturedProjectTile = (props) => {
     const [project, setProject] = useState(props.project);
 
     return (
-        <div key={project._id} id={`project${props.index}`}
+        <a 
+            target='_blank'
+            href={project.externalLink}
+            key={project._id} id={`project${props.index}`}
             className='projectTile featuredTile'
             style={{
                 backgroundImage: `url(${project.images[0]})`,
             }}>
-            <h2 className='title tileLabel hidden'>{project.name}</h2>
-        </div>
+            <h3 className='subtitle bottomLabel'>{project.name}</h3>
+        </a>
     );
 }
 

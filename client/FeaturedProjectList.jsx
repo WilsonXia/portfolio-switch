@@ -46,7 +46,10 @@ const FeaturedProjectList = (props) => {
 
     return (
         <div id="featuredList">
-            {projectNodes}
+            <div id='projects' className='container'>
+                {projectNodes}
+            </div>
+            <h2 id="featureLabel" className='title is-3'>Featured!</h2>
         </div>
     );
 }

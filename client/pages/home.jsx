@@ -50,12 +50,14 @@ const { FeaturedProjectList } = require('../FeaturedProjectList.jsx');
 
 const AboutMePanel = () => {
     return (
-        <section id="aboutMe">
-            <h1 className="title">Wilson Xia</h1>
-            <h2 className="subtitle">Your Future Dev Partner</h2>
+        <section id="aboutMe" className='column'>
+            <div id='description'>
+                <h1 className="title is-1">Wilson Xia</h1>
+                <h2 className="subtitle">Your Future Dev Partner</h2>
+            </div>
 
             <a className="projectsButton" href="/projects">
-                <span className="icon">
+                <span className="icon is-large">
                     <img src="/assets/img/project.svg" alt="projects icon" />
                 </span>
                 <h2 id="projectsLabel" className="navLabel">Enter</h2>
@@ -72,8 +74,7 @@ const Home = () => {
         return project.isFeatured;
     };
     return (
-        <div
-            className='is-flex'>
+        <div id='homeMain'>
             <FeaturedProjectList
                 projects={[]}
                 filters={[featuredFilter]}
@@ -83,7 +84,6 @@ const Home = () => {
             <AboutMePanel />
         </div>
     );
-
 }
 
 const init = () => {
