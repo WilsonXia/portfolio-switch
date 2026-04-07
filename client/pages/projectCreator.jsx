@@ -1,3 +1,4 @@
+const helper = require('../helper.js');
 const React = require('react');
 const { useState } = React;
 const { createRoot } = require('react-dom/client');
@@ -9,10 +10,12 @@ const Creator = () => {
 
     return (
         <div className='tools'>
-            <ProjectForm action={"create"} triggerReload={() => setReloadProjects(!reloadProjects)} />
-            <ProjectList projects={[]} 
-                editable={true} 
-                reloadProjectState={reloadProjects} 
+            <div className="centeringBox">
+                <ProjectForm action={"create"} triggerReload={() => setReloadProjects(!reloadProjects)} />
+            </div>
+            <ProjectList projects={[]}
+                editable={true}
+                reloadProjectState={reloadProjects}
                 triggerReload={() => setReloadProjects(!reloadProjects)} />
         </div>
     );
@@ -21,6 +24,9 @@ const Creator = () => {
 const init = () => {
     const root = createRoot(document.getElementById('creator'));
     root.render(<Creator />);
+
+    helper.displayCurrentTime();
+    setInterval(helper.displayCurrentTime, 1000);
 }
 
 window.onload = init;

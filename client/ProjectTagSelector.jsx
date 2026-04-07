@@ -27,20 +27,26 @@ const ProjectTagSelector = (props) => {
     }
 
     const inputTags = Tags.map((t) => {
-        return <div className='tag'>
-            <label key={t}>{t}
+        return <div className='tag control'>
+            <label
+            key={t}
+            className='checkbox'>
                 <input
+                className='checkbox'
                     type="checkbox"
                     checked={props.selected.includes(t)}
                     onChange={() => handleChange(t)}
-                /></label>
-
+                />
+                {` ${t}`}
+                </label>
         </div>
     });
     return (
-        <div id='tagsContainer'>
-            <label>Tags</label>
-            {inputTags}
+        <div id='tagsContainer' className='field'>
+            <label className='label'>Tags</label>
+            <div className="checkboxes field">
+                {inputTags}
+            </div>
         </div>
     )
 }

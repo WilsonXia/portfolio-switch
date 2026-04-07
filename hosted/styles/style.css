@@ -2,6 +2,7 @@
 @import "./projectPopup.css";
 @import "./navbar.css";
 @import "./home.css";
+@import "./creator.css";
 
 @font-face {
     font-family: switch;
@@ -17,6 +18,15 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+}
+
+.scroll {
+    overflow-y: visible !important;
+}
+
+.centeringBox {
+    display: flex;
+    justify-content: center;
 }
 
 .level {

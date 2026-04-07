@@ -50,10 +50,10 @@ const ProjectTile = (props) => {
 
     return (
         <div key={project._id} id={`project${props.index}`} className='tile projectTile'
-            onMouseEnter={showProjectLabel}
+            onMouseEnter={!props.editable ? showProjectLabel : null}
             // onMouseLeave={hideProjectLabel}
-            onMouseUp={checkForClick}
-            onMouseDown={trackMouse}
+            onMouseUp={!props.editable ? checkForClick : null}
+            onMouseDown={!props.editable ? trackMouse : null}
             style={{
                 backgroundImage: `url(${project.images[0]})`,
             }}>

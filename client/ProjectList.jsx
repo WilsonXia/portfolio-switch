@@ -74,15 +74,17 @@ const ProjectList = (props) => {
             {/* Manual offset for the carousel */}
             {/* <div className='tile'></div> */}
             {projectNodes}
-            <a id="loginButton" href="/login" onClick={
-                (e) => {
-                    e.preventDefault();
-                    document.getElementById('loginPopup').classList.toggle('hidden');
-                    return false;
-                }
-            }>
-                <h2 className='subtitle'>Edit Projects</h2>
-            </a>
+            {props.editable ? <></> :
+                <a id="loginButton" href="/login" onClick={
+                    (e) => {
+                        e.preventDefault();
+                        document.getElementById('loginPopup').classList.toggle('hidden');
+                        return false;
+                    }
+                }>
+                    <h2 className='subtitle'>Edit Projects</h2>
+                </a>
+            }
         </Carousel>
     );
 }

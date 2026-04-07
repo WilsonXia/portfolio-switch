@@ -52,11 +52,17 @@ const handleUpdateProject = (e, props, onProjectChanged) => {
     formData.append("projectID", props.projectID);
 
     console.log(props.tags);
-    
+
 
     if (checkData(formData, props)) {
         helper.sendPostFile(e.target.action, formData, onProjectChanged);
     }
+    return false;
+}
+
+const promptConfirmation = (e) => {
+    e.preventDefault();
+    console.log("You gonna delet that?");
     return false;
 }
 
@@ -117,6 +123,48 @@ const ProjectForm = (props) => {
         }
     }, [props.reloadProjectState]); // Dependency, will trigger effect on change
 
+    const IsFeaturedCB = () => {
+        return (
+            <label className='label'>Is Featured
+                <div className="control">
+                    <input className='star' type='checkbox' name="isFeatured" checked={project.isFeatured}
+                        onChange={handleCheckboxChange} />
+                </div>
+            </label>
+        );
+    }
+
+    const ImageUploader = () => {
+        return (
+            <div class="file has-name is-boxed">
+                <label class="file-label label">
+                    <input class="file-input"
+                        type="file"
+                        multiple accept=".png, .jpg"
+                        name='imageFile'
+                        onChange={handleImageUpload}
+                    />
+                    <span class="file-cta">
+                        <span class="icon">
+                            <img src="/assets/img/upload.svg" alt="upload icon"/>
+                        </span>
+                        <span class="file-label"> Upload an image... </span>
+                    </span>
+                    <span class="file-name"></span>
+                </label>
+            </div>
+        );
+        {/* <div className="field">
+                <label className='label'>Upload Images: </label>
+                <input
+                    type="file"
+                    multiple accept=".png, .jpg"
+                    name='imageFile'
+                    onChange={handleImageUpload}
+                />
+            </div> */}
+    }
+
     return (
         <form id={props.action + "Form"}
             onSubmit={(e) => formChanges.handler(e)}
@@ -125,6 +173,8 @@ const ProjectForm = (props) => {
             encType="multipart/form-data"
             className={props.action + "Form"}
         >
+            {props.action === "create" ? <h2 className='title'>Create New Project</h2> : <></>}
+
             <TextInput inputName={"Name"} placeholder={"Enter a name..."} value={project.name}
                 action={props.action} onChange={handleTextChange} />
 
@@ -135,19 +185,21 @@ const ProjectForm = (props) => {
 
             <TextInput inputName={"Github Link"} placeholder={"Link"} value={project.githubLink}
                 action={props.action} onChange={handleTextChange} />
-
-            <label>Is Featured:
-                <input className='star' type='checkbox' name="isFeatured" checked={project.isFeatured}
-                    onChange={handleCheckboxChange} /></label>
-
-            <label>Upload Images: </label>
-            <input
-                type="file"
-                multiple accept=".png, .jpg"
-                name='imageFile'
-                onChange={handleImageUpload}
-            />
-            <input className='submit button' type='submit' value={formChanges.submit} />
+            <div className="field">
+                <ImageUploader />
+            </div>
+            <div className="field">
+                <IsFeaturedCB />
+            </div>
+            <div className='field is-grouped is-grouped-right'>
+                {props.action === "update" ? 
+                <button className='button has-background-danger'
+                onClick={(e)=>{promptConfirmation(e)}}
+                >
+                    Delete</button>
+                : <></>}
+                <input className='submit button' type='submit' value={formChanges.submit} />
+            </div>
         </form>)
 }
 
