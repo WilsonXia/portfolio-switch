@@ -16,7 +16,7 @@ const FeaturedProjectList = (props) => {
                 let filteredData = data.projects;
                 // Filter for each filter inside the props.filters
                 for (let filterMethod of props.filters) {
-                    filteredData.filter(filterMethod);
+                    filteredData = filteredData.filter(filterMethod);
                 }
                 setProjects(filteredData);
             }
