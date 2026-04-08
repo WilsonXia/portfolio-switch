@@ -28,7 +28,8 @@ body,
 /* .navbar,
 .navbar-menu, */
 .input,
-#loginForm {
+#loginForm,
+#deleteForm {
     background-color: var(--bulma-scheme-main);
 }
 

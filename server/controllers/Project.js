@@ -92,7 +92,7 @@ const createProject = async (req, res) => {
   try {
     const newProject = new Project(changes);
     await newProject.save();
-    return res.status(201).json({ name: newProject.name, projectID: newProject._id });
+    return res.status(201).json({ redirect:'/creator' });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
@@ -144,9 +144,26 @@ const updateProject = async (req, res) => {
   }
 }
 
+const deleteProject = async (req, res) => {
+  const query = { _id: req.query.projectID };
+  console.log(query);
+  try{
+    // Obtain the project by ID
+    const result = await Project.findOneAndDelete(query);
+    if(result != null){
+      // If we properly deleted the doc
+      return res.json({project: result});
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({error: "Error deleting project..."});
+  }
+}
+
 module.exports = {
   getProjects,
   getProject,
   createProject,
   updateProject,
+  deleteProject
 };

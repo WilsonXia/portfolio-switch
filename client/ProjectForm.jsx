@@ -60,9 +60,11 @@ const handleUpdateProject = (e, props, onProjectChanged) => {
     return false;
 }
 
-const promptConfirmation = (e) => {
+const promptConfirmation = (e, project) => {
     e.preventDefault();
-    console.log("You gonna delet that?");
+    document.getElementById('deletePopup').classList.toggle('hidden');
+    document.getElementById('deleteID').value = project._id;
+    document.getElementById('deleteMessage').innerHTML = `Delete ${project.name} from the database?`;
     return false;
 }
 
@@ -194,7 +196,7 @@ const ProjectForm = (props) => {
             <div className='field is-grouped is-grouped-right'>
                 {props.action === "update" ? 
                 <button className='button has-background-danger'
-                onClick={(e)=>{promptConfirmation(e)}}
+                onClick={(e)=>{promptConfirmation(e, project)}}
                 >
                     Delete</button>
                 : <></>}

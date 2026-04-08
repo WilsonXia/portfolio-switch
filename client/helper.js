@@ -6,10 +6,8 @@ const handleError = (message) => {
 };
 
 const handleProjectSelect = (project) => {
-    // console.log(`${project.name} was selected!`);
-    console.log(project);
-    
     // grab all element ids and match them
+    console.log(project);
     document.getElementById('projectPopup').classList.remove('hidden');
     document.getElementById('popupName').textContent = project.name;
     document.getElementById('popupTags').textContent = project.tags;
@@ -85,6 +83,24 @@ const sendPostFile = async (url, data, handler) => {
     }
 };
 
+const sendDelete = async (url, handler) => {
+    const response = await fetch(url, {
+        method: 'DELETE',
+    });
+
+    const result = await response.json();
+    hideError();
+
+    if (result.error) {
+        handleError(result.error);
+    }
+
+    if (handler) {
+        console.log('Calling handler method...');
+        handler(result);
+    }
+}
+
 const convertFormData = (formData) => {
     const formObject = Object.fromEntries(formData.entries());
     console.log(formObject);
@@ -105,5 +121,6 @@ module.exports = {
     handleError,
     handleProjectSelect,
     sendPost,
-    sendPostFile
+    sendPostFile,
+    sendDelete
 }
