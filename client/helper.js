@@ -1,3 +1,4 @@
+const React = require('react');
 const handleError = (message) => {
     console.log('Server sent back a message: ');
     console.log(message);
@@ -8,13 +9,33 @@ const handleError = (message) => {
 const handleProjectSelect = (project) => {
     // grab all element ids and match them
     console.log(project);
+    console.log(project.tags);
     document.getElementById('projectPopup').classList.remove('hidden');
     document.getElementById('popupName').textContent = project.name;
-    document.getElementById('popupTags').textContent = project.tags;
-    document.getElementById('popupLink').href = project.externalLink;
-    document.getElementById('popupGithub').href = project.githubLink;
-    if(project.isFeatured){
+    const tagElements = project.tags.map((tag) => {
+        return `<span class="tag">${tag}</span>`;
+    });
+    console.log(tagElements);
+    document.getElementById('popupTags').innerHTML = tagElements.join("");
+    if (project.externalLink) {
+        document.getElementById('popupLink').classList.remove('hidden');
+        document.getElementById('popupLink').href = project.externalLink;
+    }
+    else {
+        document.getElementById('popupLink').classList.add('hidden');
+
+    }
+    if (project.githubLink) {
+        document.getElementById('popupGithub').href = project.githubLink;
+        document.getElementById('popupGithub').classList.remove('hidden');
+    } else {
+        document.getElementById('popupGithub').classList.add('hidden');
+    }
+    if (project.isFeatured) {
         document.getElementById('popupFeatured').src = "/assets/img/star-full.svg";
+    }
+    else {
+        document.getElementById('popupFeatured').src = "/assets/img/star-empty.svg";
     }
     document.getElementById('popupCover').style.backgroundImage = `url(${project.images[0]})`;
 }
@@ -22,7 +43,7 @@ const handleProjectSelect = (project) => {
 const displayCurrentTime = () => {
     const now = new Date();
     // Use toLocaleTimeString() for easy formatting
-    const timeString = now.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+    const timeString = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     document.getElementById("clock-display").innerHTML = timeString;
 }
 

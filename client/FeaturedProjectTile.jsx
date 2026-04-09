@@ -11,9 +11,8 @@ const FeaturedProjectTile = (props) => {
     const [project, setProject] = useState(props.project);
 
     return (
-        <a 
-            target='_blank'
-            href={project.externalLink}
+        <a target='_blank'
+            href={project.externalLink ? project.externalLink : project.githubLink}
             key={project._id} id={`project${props.index}`}
             className='projectTile featuredTile'
             style={{

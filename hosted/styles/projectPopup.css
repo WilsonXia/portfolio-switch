@@ -25,6 +25,10 @@
     background-color: #30a9ff;
 }
 
+.buttonControl span{
+    width: 100%;
+}
+
 .closeButton:hover {
     background-color: rgba(1, 1, 1, 0.45);
 }

@@ -76,7 +76,6 @@ const ProjectForm = (props) => {
         createdDate: {},
     });
     const [tags, setTags] = useState([]);
-    const [images, setImages] = useState([]);
 
     // Handlers
     const handleTextChange = (e) => {
@@ -98,12 +97,12 @@ const ProjectForm = (props) => {
     const handleImageUpload = (e) => {
         console.log("image on upload");
         console.log(e.target.files);
-        setImages(e.target.files);
+        // setImages(e.target.files);
     }
     const formChanges = {
         handler: props.action === "create" ?
-            (e) => handleCreateProject(e, { tags, images }, props.triggerReload)
-            : (e) => handleUpdateProject(e, { tags, images, projectID: props.projectID }, props.triggerReload),
+            (e) => handleCreateProject(e, { tags }, props.triggerReload)
+            : (e) => handleUpdateProject(e, { tags, projectID: props.projectID }, props.triggerReload),
         submit: props.action === "create" ? "Create" : "Submit"
     };
 
@@ -144,7 +143,7 @@ const ProjectForm = (props) => {
                     <input class="file-input"
                         type="file"
                         multiple accept=".png, .jpg"
-                        name={`imageFile${props.index ? props.index : ""}`}
+                        name={`imageFile`}
                         onChange={handleImageUpload}
                     />
                     <span class="file-cta">

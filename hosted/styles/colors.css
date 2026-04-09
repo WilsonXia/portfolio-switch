@@ -3,6 +3,10 @@
         filter: invert(100%);
     }
 
+    .star {
+        filter: invert(0%) !important;
+    }
+
     .level,
     .footer {
         /* background-color: #CFCFCF; */

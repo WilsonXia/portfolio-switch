@@ -18,7 +18,7 @@ const ProjectInfoPopup = (props) => {
         return (
             <div alt="coverArt" id='popupCover'>
                 <span className="icon is-medium m-3">
-                    <img id='popupFeatured' src="/assets/img/star-empty.svg" alt="is featured" />
+                    <img id='popupFeatured' className='star' src="/assets/img/star-empty.svg" alt="is featured" />
                 </span>
             </div>
         );
@@ -44,11 +44,21 @@ const ProjectInfoPopup = (props) => {
                     <div className='popupContent'>
                         <div className='labels'>
                             <h2 id='popupName' className='title'></h2>
-                            <h3 id='popupTags' className='subtitle'></h3>
+                            <div id='popupTags' className='tags are-medium'></div>
                         </div>
                         <div className='buttonControl'>
-                            <a id='popupLink' target='_blank' className='button'>Visit Website</a>
-                            <a id='popupGithub' target='_blank' className='button'>Github</a>
+                            <a id='popupLink' target='_blank' className='button'>
+                                <span>Visit Website</span>
+                                <span class="icon">
+                                    <img src="/assets/img/logout.svg" alt="logout icon" />
+                                </span>
+                            </a>
+                            <a id='popupGithub' target='_blank' className='button'>
+                                <span>Github</span>
+                                <span class="icon is-large">
+                                    <img src="/assets/img/github.svg" alt="github logo" />
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </section>

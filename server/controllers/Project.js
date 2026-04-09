@@ -7,11 +7,11 @@ const { Project } = models;
 const uploadImages = async (req) => {
   try {
     const { imageFile } = req.files; // destructuring
-    console.log(imageFile);
+    // console.log(imageFile);
     // return;
     // upload to cloudinary
     const result = await cloudinary.uploader.upload(imageFile.tempFilePath, {folder: req.body.name});
-    console.log(JSON.stringify(result));
+    // console.log(JSON.stringify(result));
     // return the address
     return { imgURLS: [result.secure_url] };
   } catch (error) {
@@ -105,10 +105,6 @@ const createProject = async (req, res) => {
 const updateProject = async (req, res) => {
   // Project data should already be loaded onto update form on client side
   // Apply any changes
-  console.log(req.body);
-  console.log("BODY ABOVE ====================================");
-  console.log(req);
-  console.log("Files ABOVE ====================================");
   // Pass checks!
   const changes = processChanges(req);
   let check = checkProjectData(changes);
