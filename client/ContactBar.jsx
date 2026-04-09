@@ -19,14 +19,15 @@ const ContactBar = () => {
                         <img src="/assets/img/email.svg" alt="email logo" />
                     </span>
                 </a>
-                <a class='linkButton' href="tel:+16468259604">
-                    <span class="icon is-large">
-                        <img src="/assets/img/phone.svg" alt="phone logo" />
-                    </span>
-                </a>
             </nav>
         </div>
     )
 }
+
+{/* <a class='linkButton' href="tel:+16468259604">
+                    <span class="icon is-large">
+                        <img src="/assets/img/phone.svg" alt="phone logo" />
+                    </span>
+                </a> */}
 
 module.exports = {ContactBar};
