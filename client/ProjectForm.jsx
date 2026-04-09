@@ -51,9 +51,6 @@ const handleUpdateProject = (e, props, onProjectChanged) => {
     formData.append("tags", props.tags);
     formData.append("projectID", props.projectID);
 
-    console.log(props.tags);
-
-
     if (checkData(formData, props)) {
         helper.sendPostFile(e.target.action, formData, onProjectChanged);
     }
@@ -98,7 +95,11 @@ const ProjectForm = (props) => {
             [name]: checked,
         });
     }
-    const handleImageUpload = (e) => setImages(e.target.files)
+    const handleImageUpload = (e) => {
+        console.log("image on upload");
+        console.log(e.target.files);
+        setImages(e.target.files);
+    }
     const formChanges = {
         handler: props.action === "create" ?
             (e) => handleCreateProject(e, { tags, images }, props.triggerReload)
@@ -143,7 +144,7 @@ const ProjectForm = (props) => {
                     <input class="file-input"
                         type="file"
                         multiple accept=".png, .jpg"
-                        name='imageFile'
+                        name={`imageFile${props.index ? props.index : ""}`}
                         onChange={handleImageUpload}
                     />
                     <span class="file-cta">
@@ -155,16 +156,17 @@ const ProjectForm = (props) => {
                     <span class="file-name"></span>
                 </label>
             </div>
+            // <div className="field">
+            //     <label className='label'>Upload Images: </label>
+            //     <input
+            //         type="file"
+            //         multiple accept=".png, .jpg"
+            //         name='imageFile'
+            //         onChange={handleImageUpload}
+            //     />
+            // </div>
         );
-        {/* <div className="field">
-                <label className='label'>Upload Images: </label>
-                <input
-                    type="file"
-                    multiple accept=".png, .jpg"
-                    name='imageFile'
-                    onChange={handleImageUpload}
-                />
-            </div> */}
+        
     }
 
     return (

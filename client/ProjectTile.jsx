@@ -54,14 +54,16 @@ const ProjectTile = (props) => {
             // onMouseLeave={hideProjectLabel}
             onMouseUp={!props.editable ? checkForClick : null}
             onMouseDown={!props.editable ? trackMouse : null}
-            style={{
+            style={project.images[0] != null ? {
                 backgroundImage: `url(${project.images[0]})`,
+            } : {
+                backgroundColor: 'rgba(0, 0, 0, 0.4)',
             }}>
             <h2 className='title tileLabel hidden'>{project.name}</h2>
             {
                 props.editable ?
                     <div>
-                        <ProjectForm action={"update"} projectID={project._id}
+                        <ProjectForm action={"update"} projectID={project._id} index={props.index}
                             reloadProjectState={props.reloadProjectState} triggerReload={props.triggerReload} />
                     </div> : <></>
             }

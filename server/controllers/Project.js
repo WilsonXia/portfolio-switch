@@ -105,7 +105,10 @@ const createProject = async (req, res) => {
 const updateProject = async (req, res) => {
   // Project data should already be loaded onto update form on client side
   // Apply any changes
-  // console.log(req.body);
+  console.log(req.body);
+  console.log("BODY ABOVE ====================================");
+  console.log(req);
+  console.log("Files ABOVE ====================================");
   // Pass checks!
   const changes = processChanges(req);
   let check = checkProjectData(changes);
